@@ -1,11 +1,10 @@
 package com.cn.travel.web.manager;
 
-import com.cn.travel.cms.scenicSpot.entity.ScenicSpot;
-import com.cn.travel.cms.strategy.entity.Strategy;
-import com.cn.travel.cms.strategy.service.imp.StrategyService;
-import com.cn.travel.utils.Tools;
-import com.cn.travel.web.base.BaseController;
-import com.cn.travel.web.base.PageParam;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
+import com.cn.travel.cms.strategy.entity.Strategy;
+import com.cn.travel.cms.strategy.service.imp.StrategyService;
+import com.cn.travel.utils.Tools;
+import com.cn.travel.utils.UploadUtils;
+import com.cn.travel.web.base.BaseController;
+import com.cn.travel.web.base.PageParam;
 
 @Controller
 @RequestMapping("/manager")
@@ -109,13 +110,17 @@ public class StrategyController  extends BaseController {
                 int size = (int) file1.getSize();
                 System.out.println(fileName + "-->" + size);
 
-                String path = "E:/idea/travel/target/classes/static/strategy" ;
-                File dest = new File(path + "/" + fileName);
-                if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
-                    dest.getParentFile().mkdir();
+                File fileDir = UploadUtils.getImgDirFile();
+                // 输出文件夹绝对路径 – 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
+                System.out.println(fileDir.getAbsolutePath());
+                // 构建真实的文件路径
+                File newFile = new File(fileDir.getAbsolutePath()+"/strategy" + File.separator + fileName);
+                // File dest = new File(path + "/" + fileName);
+                if (!newFile.getParentFile().exists()) { //判断文件父目录是否存在
+                    newFile.getParentFile().mkdir();
                 }
                 try {
-                    file1.transferTo(dest); //保存文件
+                    file1.transferTo(newFile); //保存文件
                     entity.setImgUrl("/strategy/" + fileName);
                 } catch (IllegalStateException e) {
                     e.printStackTrace();
@@ -129,13 +134,17 @@ public class StrategyController  extends BaseController {
                 int size = (int) file2.getSize();
                 System.out.println(fileName + "-->" + size);
 
-                String path = "E:/idea/travel/target/classes/static/strategy" ;
-                File dest = new File(path + "/" + fileName);
-                if(!dest.getParentFile().exists()){ //判断文件父目录是否存在
-                    dest.getParentFile().mkdir();
+                File fileDir = UploadUtils.getImgDirFile();
+                // 输出文件夹绝对路径 – 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
+                System.out.println(fileDir.getAbsolutePath());
+                // 构建真实的文件路径
+                File newFile = new File(fileDir.getAbsolutePath()+"/strategy" + File.separator + fileName);
+                // File dest = new File(path + "/" + fileName);
+                if (!newFile.getParentFile().exists()) { //判断文件父目录是否存在
+                    newFile.getParentFile().mkdir();
                 }
                 try {
-                    file2.transferTo(dest); //保存文件
+                    file2.transferTo(newFile); //保存文件
                     entity.setIntroUrl("/strategy/" + fileName);
                 } catch (IllegalStateException e) {
                     e.printStackTrace();
