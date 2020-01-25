@@ -9,6 +9,7 @@ import com.cn.travel.role.user.service.imp.UserService;
 import com.cn.travel.utils.Tools;
 import com.cn.travel.web.base.BaseController;
 import com.cn.travel.web.base.PageParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,16 +23,18 @@ public class TravelRoutePortalController extends BaseController {
 
     @Autowired
     TravelRouteService travelRouteService;
+
     @Autowired
     UserService userService;
+
     @Autowired
     OrderService orderService;
 
     @RequestMapping("/travelRoute")
-    public ModelAndView travelRoute(PageParam pageParam){
+    public ModelAndView travelRoute(PageParam pageParam) {
         ModelAndView mv = this.getModeAndView();
-        if(pageParam.getPageNumber()<1){
-            pageParam =new PageParam();
+        if (pageParam.getPageNumber() < 1) {
+            pageParam = new PageParam();
             long count = 0;
             try {
                 count = travelRouteService.count2();
@@ -39,26 +42,26 @@ public class TravelRoutePortalController extends BaseController {
                 e.printStackTrace();
             }
             pageParam.setCount(count);
-            if(count<=7){
+            if (count <= 7) {
                 pageParam.setSize(1);
-            }else{
-                pageParam.setSize(count%7==0?count/7:count/7+1);
+            } else {
+                pageParam.setSize(count % 7 == 0 ? count / 7 : count / 7 + 1);
             }
             pageParam.setPageNumber(1);
             pageParam.setPageSize(7);
         }
-        mv.addObject("pageData", travelRouteService.findByPage(pageParam.getPageNumber(),pageParam.getPageSize()));
-        mv.addObject("pageParam",pageParam);
+        mv.addObject("pageData", travelRouteService.findByPage(pageParam.getPageNumber(), pageParam.getPageSize()));
+        mv.addObject("pageParam", pageParam);
         mv.setViewName("portal/travelRoute");
         return mv;
     }
 
     @RequestMapping("/travelRoutePortalView")
-    public ModelAndView travelRoutePortalView(String id){
+    public ModelAndView travelRoutePortalView(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",travelRouteService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", travelRouteService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("portal/travelRouteView");
@@ -66,12 +69,12 @@ public class TravelRoutePortalController extends BaseController {
     }
 
     @RequestMapping("/travelRouteCreatOrder")
-    public ModelAndView travelRouteCreatOrder(String id,HttpSession httpSession){
+    public ModelAndView travelRouteCreatOrder(String id, HttpSession httpSession) {
         ModelAndView mv = this.getModeAndView();
         try {
             TravelRoute travelRoute = travelRouteService.findById(id);
             User user = userService.findByUserName(httpSession.getAttribute("userName").toString());
-            Order order  = new Order();
+            Order order = new Order();
             order.setImgUrl(travelRoute.getImgUrl());
             order.setId(Tools.getUUID());
             order.setUserId(user.getId());
@@ -84,13 +87,13 @@ public class TravelRoutePortalController extends BaseController {
             order.setIcCode(user.getIcCode());
             order.setRequirement("无");
             order.setState(0);
-            order.setOrderCode("O"+Tools.getUUID().substring(0,6).toUpperCase());
-            order.setOrderTime(Tools.date2Str(new Date(),"yyyy-MM-dd"));
+            order.setOrderCode("O" + Tools.getUUID().substring(0, 6).toUpperCase());
+            order.setOrderTime(Tools.date2Str(new Date(), "yyyy-MM-dd"));
             order.setSetoffTime(travelRoute.getStartTime());
             orderService.save(order);
-            mv.addObject("entity",travelRoute);
-            mv.addObject("CreatSuccess",true);
-        }catch (Exception e){
+            mv.addObject("entity", travelRoute);
+            mv.addObject("CreatSuccess", true);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("portal/travelRouteView");

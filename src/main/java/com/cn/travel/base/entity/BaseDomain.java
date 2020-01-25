@@ -1,6 +1,7 @@
 package com.cn.travel.base.entity;
 
 import java.util.Date;
+
 public class BaseDomain {
 
     private String id;
@@ -11,7 +12,7 @@ public class BaseDomain {
 
     private Integer deleteStatus;
 
-    private  String modifyUserId;
+    private String modifyUserId;
 
     private Date modifyTime;
 

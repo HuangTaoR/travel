@@ -3,7 +3,7 @@ package com.cn.travel.cms.travelRoute.entity;
 import com.cn.travel.base.entity.BaseDomain;
 
 @SuppressWarnings("serial")
-public class TravelRoute extends BaseDomain{
+public class TravelRoute extends BaseDomain {
 
     private String title;
 

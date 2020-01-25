@@ -5,6 +5,7 @@ import com.cn.travel.cms.message.service.imp.MessageService;
 import com.cn.travel.utils.Tools;
 import com.cn.travel.web.base.BaseController;
 import com.cn.travel.web.base.PageParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +23,10 @@ public class MessageController extends BaseController {
     MessageService messageService;
 
     @RequestMapping("/messageList")
-    public ModelAndView messageList(PageParam pageParam, @RequestParam(value = "query", required = false) String query){
+    public ModelAndView messageList(PageParam pageParam, @RequestParam(value = "query", required = false) String query) {
         ModelAndView mv = this.getModeAndView();
-        if(pageParam.getPageNumber()<1){
-            pageParam =new PageParam();
+        if (pageParam.getPageNumber() < 1) {
+            pageParam = new PageParam();
             long count = 0;
             try {
                 count = messageService.count();
@@ -33,15 +34,15 @@ public class MessageController extends BaseController {
                 e.printStackTrace();
             }
             pageParam.setCount(count);
-            if(count<=10){
+            if (count <= 10) {
                 pageParam.setSize(1);
-            }else{
-                pageParam.setSize(count%10==0?count/10:count/10+1);
+            } else {
+                pageParam.setSize(count % 10 == 0 ? count / 10 : count / 10 + 1);
             }
             pageParam.setPageNumber(1);
             pageParam.setPageSize(10);
         }
-        List<Message> list = messageService.findByPage(pageParam.getPageNumber(),pageParam.getPageSize(), query);
+        List<Message> list = messageService.findByPage(pageParam.getPageNumber(), pageParam.getPageSize(), query);
         mv.addObject("pageData", list);
         if (Tools.notEmpty(query)) {
             mv.addObject("query", query);
@@ -52,25 +53,25 @@ public class MessageController extends BaseController {
                 pageParam.setSize(1);
             }
         }
-        mv.addObject("pageParam",pageParam);
+        mv.addObject("pageParam", pageParam);
         mv.setViewName("message/messageList");
         return mv;
     }
 
     @RequestMapping("/messageAdd")
-    public ModelAndView messageAdd(){
+    public ModelAndView messageAdd() {
         ModelAndView mv = this.getModeAndView();
-        mv.addObject("entity",new Message());
+        mv.addObject("entity", new Message());
         mv.setViewName("message/messageEdit");
         return mv;
     }
 
     @RequestMapping("/messageView")
-    public ModelAndView messageView(String id){
+    public ModelAndView messageView(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",messageService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", messageService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("message/messageView");
@@ -78,11 +79,11 @@ public class MessageController extends BaseController {
     }
 
     @RequestMapping("/messageEdit")
-    public ModelAndView messageEdit(String id){
+    public ModelAndView messageEdit(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",messageService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", messageService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("message/messageEdit");
@@ -90,37 +91,37 @@ public class MessageController extends BaseController {
     }
 
     @RequestMapping("/messageSave")
-    public String messageSave(HttpServletRequest request, String id){
+    public String messageSave(HttpServletRequest request, String id) {
         Message entity = null;
         try {
-            if(Tools.notEmpty(id)){
+            if (Tools.notEmpty(id)) {
                 entity = messageService.findById(id);
-            }else{
+            } else {
                 entity = new Message();
             }
-            this.bindValidateRequestEntity(request,entity);
-            if (Tools.isEmpty(entity.getId())){
+            this.bindValidateRequestEntity(request, entity);
+            if (Tools.isEmpty(entity.getId())) {
                 entity.setId(Tools.getUUID());
                 messageService.save(entity);
-            }else{
+            } else {
                 messageService.update(entity);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return REDIRECT+"/manager/messageList";
+        return REDIRECT + "/manager/messageList";
     }
 
     @RequestMapping("/messageDelete")
-    public String messageDelete(String id){
-        if(Tools.notEmpty(id)){
+    public String messageDelete(String id) {
+        if (Tools.notEmpty(id)) {
             try {
                 messageService.deleteByid(id);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return REDIRECT+"/manager/messageList";
+        return REDIRECT + "/manager/messageList";
     }
 
 }

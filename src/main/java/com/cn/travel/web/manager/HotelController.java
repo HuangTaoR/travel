@@ -114,7 +114,7 @@ public class HotelController extends BaseController {
                 // 输出文件夹绝对路径 – 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
                 System.out.println(fileDir.getAbsolutePath());
                 // 构建真实的文件路径
-                File newFile = new File(fileDir.getAbsolutePath()+"/hotel" + File.separator + fileName);
+                File newFile = new File(fileDir.getAbsolutePath() + "/hotel" + File.separator + fileName);
                 // File dest = new File(path + "/" + fileName);
                 if (!newFile.getParentFile().exists()) { //判断文件父目录是否存在
                     newFile.getParentFile().mkdir();

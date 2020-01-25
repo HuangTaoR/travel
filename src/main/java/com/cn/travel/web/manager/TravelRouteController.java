@@ -27,10 +27,10 @@ public class TravelRouteController extends BaseController {
     TravelRouteService travelRouteService;
 
     @RequestMapping("/travelRouteList")
-    public ModelAndView travelRouteList(PageParam pageParam, @RequestParam(value = "query", required = false) String query){
+    public ModelAndView travelRouteList(PageParam pageParam, @RequestParam(value = "query", required = false) String query) {
         ModelAndView mv = this.getModeAndView();
-        if(pageParam.getPageNumber()<1){
-            pageParam =new PageParam();
+        if (pageParam.getPageNumber() < 1) {
+            pageParam = new PageParam();
             long count = 0;
             try {
                 count = travelRouteService.count();
@@ -38,15 +38,15 @@ public class TravelRouteController extends BaseController {
                 e.printStackTrace();
             }
             pageParam.setCount(count);
-            if(count<=10){
+            if (count <= 10) {
                 pageParam.setSize(1);
-            }else{
-                pageParam.setSize(count%10==0?count/10:count/10+1);
+            } else {
+                pageParam.setSize(count % 10 == 0 ? count / 10 : count / 10 + 1);
             }
             pageParam.setPageNumber(1);
             pageParam.setPageSize(10);
         }
-        List<TravelRoute> list = travelRouteService.findByPage(pageParam.getPageNumber(),pageParam.getPageSize(), query);
+        List<TravelRoute> list = travelRouteService.findByPage(pageParam.getPageNumber(), pageParam.getPageSize(), query);
         mv.addObject("pageData", list);
         if (Tools.notEmpty(query)) {
             mv.addObject("query", query);
@@ -57,25 +57,25 @@ public class TravelRouteController extends BaseController {
                 pageParam.setSize(1);
             }
         }
-        mv.addObject("pageParam",pageParam);
+        mv.addObject("pageParam", pageParam);
         mv.setViewName("travelRoute/travelRouteList");
         return mv;
     }
 
     @RequestMapping("/travelRouteAdd")
-    public ModelAndView travelRouteAdd(){
+    public ModelAndView travelRouteAdd() {
         ModelAndView mv = this.getModeAndView();
-        mv.addObject("entity",new TravelRoute());
+        mv.addObject("entity", new TravelRoute());
         mv.setViewName("travelRoute/travelRouteEdit");
         return mv;
     }
 
     @RequestMapping("/travelRouteView")
-    public ModelAndView travelRouteView(String id){
+    public ModelAndView travelRouteView(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",travelRouteService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", travelRouteService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("travelRoute/travelRouteView");
@@ -83,11 +83,11 @@ public class TravelRouteController extends BaseController {
     }
 
     @RequestMapping("/travelRouteEdit")
-    public ModelAndView travelRouteEdit(String id){
+    public ModelAndView travelRouteEdit(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",travelRouteService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", travelRouteService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("travelRoute/travelRouteEdit");
@@ -95,16 +95,16 @@ public class TravelRouteController extends BaseController {
     }
 
     @RequestMapping("/travelRouteSave")
-    public String travelRouteSave(HttpServletRequest request, String id, @RequestParam("fileName") MultipartFile file){
+    public String travelRouteSave(HttpServletRequest request, String id, @RequestParam("fileName") MultipartFile file) {
         TravelRoute entity = null;
         try {
-            if(Tools.notEmpty(id)){
+            if (Tools.notEmpty(id)) {
                 entity = travelRouteService.findById(id);
-            }else{
+            } else {
                 entity = new TravelRoute();
             }
-            this.bindValidateRequestEntity(request,entity);
-            if(file != null && !file.isEmpty()){
+            this.bindValidateRequestEntity(request, entity);
+            if (file != null && !file.isEmpty()) {
                 String fileName = file.getOriginalFilename();
                 int size = (int) file.getSize();
                 System.out.println(fileName + "-->" + size);
@@ -113,7 +113,7 @@ public class TravelRouteController extends BaseController {
                 // 输出文件夹绝对路径 – 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
                 System.out.println(fileDir.getAbsolutePath());
                 // 构建真实的文件路径
-                File newFile = new File(fileDir.getAbsolutePath()+"/travelRoute" + File.separator + fileName);
+                File newFile = new File(fileDir.getAbsolutePath() + "/travelRoute" + File.separator + fileName);
                 // File dest = new File(path + "/" + fileName);
                 if (!newFile.getParentFile().exists()) { //判断文件父目录是否存在
                     newFile.getParentFile().mkdir();
@@ -127,27 +127,27 @@ public class TravelRouteController extends BaseController {
                     e.printStackTrace();
                 }
             }
-            if (Tools.isEmpty(entity.getId())){
+            if (Tools.isEmpty(entity.getId())) {
                 entity.setId(Tools.getUUID());
                 travelRouteService.save(entity);
-            }else{
+            } else {
                 travelRouteService.update(entity);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return REDIRECT+"/manager/travelRouteList";
+        return REDIRECT + "/manager/travelRouteList";
     }
 
     @RequestMapping("/travelRouteDelete")
-    public String travelRouteDelete(String id){
-        if(Tools.notEmpty(id)){
+    public String travelRouteDelete(String id) {
+        if (Tools.notEmpty(id)) {
             try {
                 travelRouteService.deleteByid(id);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return REDIRECT+"/manager/travelRouteList";
+        return REDIRECT + "/manager/travelRouteList";
     }
 }

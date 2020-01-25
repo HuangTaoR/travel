@@ -3,6 +3,7 @@ package com.cn.travel.cms.message.dao;
 import com.cn.travel.base.dao.BaseDao;
 import com.cn.travel.cms.message.entity.Message;
 import com.cn.travel.cms.message.provider.MessageSqlProvider;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 

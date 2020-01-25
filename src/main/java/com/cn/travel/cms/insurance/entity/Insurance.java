@@ -1,8 +1,9 @@
 package com.cn.travel.cms.insurance.entity;
 
 import com.cn.travel.base.entity.BaseDomain;
+
 @SuppressWarnings("serial")
-public class Insurance extends BaseDomain{
+public class Insurance extends BaseDomain {
 
     private String title;
 

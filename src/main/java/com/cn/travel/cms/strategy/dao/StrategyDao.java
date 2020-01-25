@@ -5,6 +5,7 @@ import com.cn.travel.cms.scenicSpot.entity.ScenicSpot;
 import com.cn.travel.cms.scenicSpot.provider.ScenicSpotSqlProvider;
 import com.cn.travel.cms.strategy.entity.Strategy;
 import com.cn.travel.cms.strategy.provider.StrategySqlProvider;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -36,8 +37,6 @@ public interface StrategyDao extends BaseDao<Strategy> {
 
     @SelectProvider(type = StrategySqlProvider.class, method = "count")
     public long count();
-
-
 
     @SelectProvider(type = StrategySqlProvider.class, method = "state0count")
     public long state0count();

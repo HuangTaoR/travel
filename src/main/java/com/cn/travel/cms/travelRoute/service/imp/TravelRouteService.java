@@ -6,6 +6,7 @@ import com.cn.travel.cms.travelRoute.service.ITravelRouteService;
 import com.cn.travel.utils.Tools;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,31 +19,31 @@ public class TravelRouteService implements ITravelRouteService {
     @Resource
     private TravelRouteDao travelRouteDao;
 
-    public long count()throws Exception{
+    public long count() throws Exception {
         return travelRouteDao.count();
     }
 
-    public long count2()throws Exception{
+    public long count2() throws Exception {
         return travelRouteDao.count2();
     }
 
-    public TravelRoute findById(String id)throws Exception{
+    public TravelRoute findById(String id) throws Exception {
         return travelRouteDao.findById(id);
     }
 
-    public List<TravelRoute> findList()throws Exception{
+    public List<TravelRoute> findList() throws Exception {
         return travelRouteDao.findList();
     }
 
-    public void save(TravelRoute travelRoute)throws Exception{
+    public void save(TravelRoute travelRoute) throws Exception {
         travelRouteDao.save(travelRoute);
     }
 
-    public void update(TravelRoute travelRoute)throws Exception{
+    public void update(TravelRoute travelRoute) throws Exception {
         travelRouteDao.update(travelRoute);
     }
 
-    public void deleteByid(String id)throws Exception{
+    public void deleteByid(String id) throws Exception {
         travelRouteDao.deleteByid(id);
     }
 
@@ -54,7 +55,7 @@ public class TravelRouteService implements ITravelRouteService {
         } else {
             list = travelRouteDao.findList();
         }
-        PageInfo<TravelRoute> pageInfo=new PageInfo<TravelRoute>(list);
+        PageInfo<TravelRoute> pageInfo = new PageInfo<TravelRoute>(list);
         return pageInfo.getList();
     }
 
@@ -62,19 +63,19 @@ public class TravelRouteService implements ITravelRouteService {
         List<TravelRoute> list = new ArrayList<TravelRoute>();
         PageHelper.startPage(currentPage, pageSize);
         list = travelRouteDao.indexList();
-        PageInfo<TravelRoute> pageInfo=new PageInfo<TravelRoute>(list);
+        PageInfo<TravelRoute> pageInfo = new PageInfo<TravelRoute>(list);
         return pageInfo.getList();
     }
 
-    public long state0count()throws Exception{
+    public long state0count() throws Exception {
         return travelRouteDao.state0count();
     }
 
-    public long state1count()throws Exception{
+    public long state1count() throws Exception {
         return travelRouteDao.state1count();
     }
 
-    public long state2count()throws Exception{
+    public long state2count() throws Exception {
         return travelRouteDao.state2count();
     }
 }

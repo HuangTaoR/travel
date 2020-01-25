@@ -7,6 +7,7 @@ import com.cn.travel.role.user.service.imp.UserService;
 import com.cn.travel.utils.Tools;
 import com.cn.travel.web.base.BaseController;
 import com.cn.travel.web.base.PageParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class MessagePortalController extends BaseController {
 
     @Autowired
     IMessageService messageService;
+
     @Autowired
     UserService userService;
 
@@ -34,11 +36,11 @@ public class MessagePortalController extends BaseController {
     }
 
     @RequestMapping("/saveMeessage")
-    public ModelAndView saveMeessage(HttpSession httpSession,HttpServletRequest request) throws Exception {
+    public ModelAndView saveMeessage(HttpSession httpSession, HttpServletRequest request) throws Exception {
         ModelAndView mv = this.getModeAndView();
         User user = userService.findByUserName(httpSession.getAttribute("userName").toString());
         Message message = new Message();
-        this.bindValidateRequestEntity(request,message);
+        this.bindValidateRequestEntity(request, message);
         message.setId(Tools.getUUID());
         message.setUserId(user.getId());
         message.setUserName(user.getUserName());
@@ -46,7 +48,7 @@ public class MessagePortalController extends BaseController {
         message.setState(1);
         messageService.save(message);
         mv.addObject("messageCount", messageService.countByUserId(user.getId()));
-        mv.addObject("message","保存成功！");
+        mv.addObject("message", "保存成功！");
         mv.setViewName("portal/myMessage");
         return mv;
     }
@@ -59,9 +61,9 @@ public class MessagePortalController extends BaseController {
     ) throws Exception {
         ModelAndView mv = this.getModeAndView();
         User user = userService.findByUserName(httpSession.getAttribute("userName").toString());
-        PageParam pageParam = messageService.findByPageByUserId(pageNum,pageSize,user.getId());
+        PageParam pageParam = messageService.findByPageByUserId(pageNum, pageSize, user.getId());
         mv.addObject("pageData", pageParam.getResult());
-        mv.addObject("pageParam",pageParam);
+        mv.addObject("pageParam", pageParam);
         mv.setViewName("portal/messageList");
         return mv;
     }

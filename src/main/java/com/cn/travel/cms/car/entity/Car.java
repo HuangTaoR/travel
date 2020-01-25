@@ -1,6 +1,7 @@
 package com.cn.travel.cms.car.entity;
 
 import com.cn.travel.base.entity.BaseDomain;
+
 @SuppressWarnings("serial")
 public class Car extends BaseDomain {
 

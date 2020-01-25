@@ -1,6 +1,7 @@
 package com.cn.travel.cms.strategy.entity;
 
 import com.cn.travel.base.entity.BaseDomain;
+
 @SuppressWarnings("serial")
 public class Strategy extends BaseDomain {
     private String imgUrl;

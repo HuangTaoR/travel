@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ManagerInterceptor implements HandlerInterceptor {
-//重写springmvc的拦截器，prehandle是预处理
+    //重写springmvc的拦截器，prehandle是预处理
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Object user = request.getSession().getAttribute("admin");

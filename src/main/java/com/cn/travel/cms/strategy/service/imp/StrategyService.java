@@ -8,6 +8,7 @@ import com.cn.travel.cms.strategy.service.IStrategyService;
 import com.cn.travel.utils.Tools;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,32 +16,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class StrategyService implements IStrategyService{
+public class StrategyService implements IStrategyService {
 
     @Resource
     private StrategyDao strategyDao;
 
-    public long count()throws Exception{
-        return  strategyDao.count();
+    public long count() throws Exception {
+        return strategyDao.count();
     }
 
-
-    public Strategy findById(String id)throws Exception{
+    public Strategy findById(String id) throws Exception {
         return strategyDao.findById(id);
     }
 
-    public List<Strategy> findList()throws Exception{
+    public List<Strategy> findList() throws Exception {
         return strategyDao.findList();
     }
 
-    public void save(Strategy strategy)throws Exception{
+    public void save(Strategy strategy) throws Exception {
         strategyDao.save(strategy);
     }
 
-    public void update(Strategy strategy)throws Exception{
+    public void update(Strategy strategy) throws Exception {
         strategyDao.update(strategy);
     }
-    public void deleteByid(String id)throws Exception{
+
+    public void deleteByid(String id) throws Exception {
         strategyDao.deleteByid(id);
     }
 
@@ -52,7 +53,7 @@ public class StrategyService implements IStrategyService{
         } else {
             list = strategyDao.findList();
         }
-        PageInfo<Strategy> pageInfo=new PageInfo<Strategy>(list);
+        PageInfo<Strategy> pageInfo = new PageInfo<Strategy>(list);
         return pageInfo.getList();
     }
 
@@ -60,18 +61,19 @@ public class StrategyService implements IStrategyService{
         List<Strategy> list = new ArrayList<Strategy>();
         PageHelper.startPage(currentPage, pageSize);
         list = strategyDao.indexList();
-        PageInfo<Strategy> pageInfo=new PageInfo<Strategy>(list);
+        PageInfo<Strategy> pageInfo = new PageInfo<Strategy>(list);
         return pageInfo.getList();
     }
 
+    public long state0count() throws Exception {
+        return strategyDao.state0count();
+    }
 
-    public long state0count()throws Exception{
-        return  strategyDao.state0count();
+    public long state1count() throws Exception {
+        return strategyDao.state1count();
     }
-    public long state1count()throws Exception{
-        return  strategyDao.state1count();
-    }
-    public long state2count()throws Exception{
-        return  strategyDao.state2count();
+
+    public long state2count() throws Exception {
+        return strategyDao.state2count();
     }
 }

@@ -3,6 +3,7 @@ package com.cn.travel.cms.order.dao;
 import com.cn.travel.base.dao.BaseDao;
 import com.cn.travel.cms.order.entity.Order;
 import com.cn.travel.cms.order.provider.OrderSqlProvider;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -41,8 +42,10 @@ public interface OrderDao extends BaseDao<Order> {
 
     @SelectProvider(type = OrderSqlProvider.class, method = "state0count")
     public long state0count();
+
     @SelectProvider(type = OrderSqlProvider.class, method = "state1count")
     public long state1count();
+
     @SelectProvider(type = OrderSqlProvider.class, method = "state2count")
     public long state2count();
 }

@@ -3,6 +3,7 @@ package com.cn.travel.role.admin.dao;
 import com.cn.travel.base.dao.BaseDao;
 import com.cn.travel.role.admin.entity.Admin;
 import com.cn.travel.role.admin.provider.AdminSqlProvider;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 

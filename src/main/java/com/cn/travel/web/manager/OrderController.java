@@ -5,6 +5,7 @@ import com.cn.travel.cms.order.service.imp.OrderService;
 import com.cn.travel.utils.Tools;
 import com.cn.travel.web.base.BaseController;
 import com.cn.travel.web.base.PageParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +25,8 @@ public class OrderController extends BaseController {
     @RequestMapping("/orderList")
     public ModelAndView orderList(PageParam pageParam, @RequestParam(value = "query", required = false) String query) {
         ModelAndView mv = this.getModeAndView();
-        if(pageParam.getPageNumber()<1){
-            pageParam =new PageParam();
+        if (pageParam.getPageNumber() < 1) {
+            pageParam = new PageParam();
             long count = 0;
             try {
                 count = orderService.count();
@@ -33,15 +34,15 @@ public class OrderController extends BaseController {
                 e.printStackTrace();
             }
             pageParam.setCount(count);
-            if(count<=10){
+            if (count <= 10) {
                 pageParam.setSize(1);
-            }else{
-                pageParam.setSize(count%10==0?count/10:count/10+1);
+            } else {
+                pageParam.setSize(count % 10 == 0 ? count / 10 : count / 10 + 1);
             }
             pageParam.setPageNumber(1);
             pageParam.setPageSize(10);
         }
-        List<Order> list = orderService.findByPage(pageParam.getPageNumber(),pageParam.getPageSize(), query);
+        List<Order> list = orderService.findByPage(pageParam.getPageNumber(), pageParam.getPageSize(), query);
         mv.addObject("pageData", list);
         if (Tools.notEmpty(query)) {
             mv.addObject("query", query);
@@ -52,25 +53,25 @@ public class OrderController extends BaseController {
                 pageParam.setSize(1);
             }
         }
-        mv.addObject("pageParam",pageParam);
+        mv.addObject("pageParam", pageParam);
         mv.setViewName("order/orderList");
         return mv;
     }
 
     @RequestMapping("/orderAdd")
-    public ModelAndView travelRouteAdd(){
+    public ModelAndView travelRouteAdd() {
         ModelAndView mv = this.getModeAndView();
-        mv.addObject("entity",new Order());
+        mv.addObject("entity", new Order());
         mv.setViewName("order/orderEdit");
         return mv;
     }
 
     @RequestMapping("/orderView")
-    public ModelAndView orderView(String id){
+    public ModelAndView orderView(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",orderService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", orderService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("order/orderView");
@@ -78,11 +79,11 @@ public class OrderController extends BaseController {
     }
 
     @RequestMapping("/orderEdit")
-    public ModelAndView orderEdit(String id){
+    public ModelAndView orderEdit(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",orderService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", orderService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("order/orderEdit");
@@ -90,36 +91,36 @@ public class OrderController extends BaseController {
     }
 
     @RequestMapping("/orderSave")
-    public String orderSave(HttpServletRequest request, String id){
+    public String orderSave(HttpServletRequest request, String id) {
         Order entity = null;
         try {
-            if(Tools.notEmpty(id)){
+            if (Tools.notEmpty(id)) {
                 entity = orderService.findById(id);
-            }else{
+            } else {
                 entity = new Order();
             }
-            this.bindValidateRequestEntity(request,entity);
-            if (Tools.isEmpty(entity.getId())){
+            this.bindValidateRequestEntity(request, entity);
+            if (Tools.isEmpty(entity.getId())) {
                 entity.setId(Tools.getUUID());
                 orderService.save(entity);
-            }else{
+            } else {
                 orderService.update(entity);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return REDIRECT+"/manager/orderList";
+        return REDIRECT + "/manager/orderList";
     }
 
     @RequestMapping("/orderDelete")
-    public String orderDelete(String id){
-        if(Tools.notEmpty(id)){
+    public String orderDelete(String id) {
+        if (Tools.notEmpty(id)) {
             try {
                 orderService.deleteByid(id);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return REDIRECT+"/manager/orderList";
+        return REDIRECT + "/manager/orderList";
     }
 }

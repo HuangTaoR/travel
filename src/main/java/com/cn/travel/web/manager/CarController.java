@@ -26,10 +26,10 @@ public class CarController extends BaseController {
     CarService carService;
 
     @RequestMapping("/carList")
-    public ModelAndView travelRouteList(PageParam pageParam, @RequestParam(value = "query", required = false) String query){
+    public ModelAndView travelRouteList(PageParam pageParam, @RequestParam(value = "query", required = false) String query) {
         ModelAndView mv = this.getModeAndView();
-        if(pageParam.getPageNumber()<1){
-            pageParam =new PageParam();
+        if (pageParam.getPageNumber() < 1) {
+            pageParam = new PageParam();
             long count = 0;
             try {
                 count = carService.count();
@@ -37,15 +37,15 @@ public class CarController extends BaseController {
                 e.printStackTrace();
             }
             pageParam.setCount(count);
-            if(count<=10){
+            if (count <= 10) {
                 pageParam.setSize(1);
-            }else{
-                pageParam.setSize(count%10==0?count/10:count/10+1);
+            } else {
+                pageParam.setSize(count % 10 == 0 ? count / 10 : count / 10 + 1);
             }
             pageParam.setPageNumber(1);
             pageParam.setPageSize(10);
         }
-        List<Car> list = carService.findByPage(pageParam.getPageNumber(),pageParam.getPageSize(), query);
+        List<Car> list = carService.findByPage(pageParam.getPageNumber(), pageParam.getPageSize(), query);
         mv.addObject("pageData", list);
         if (Tools.notEmpty(query)) {
             mv.addObject("query", query);
@@ -56,25 +56,25 @@ public class CarController extends BaseController {
                 pageParam.setSize(1);
             }
         }
-        mv.addObject("pageParam",pageParam);
+        mv.addObject("pageParam", pageParam);
         mv.setViewName("car/carList");
         return mv;
     }
 
     @RequestMapping("/carAdd")
-    public ModelAndView travelRouteAdd(){
+    public ModelAndView travelRouteAdd() {
         ModelAndView mv = this.getModeAndView();
-        mv.addObject("entity",new Car());
+        mv.addObject("entity", new Car());
         mv.setViewName("car/carEdit");
         return mv;
     }
 
     @RequestMapping("/carView")
-    public ModelAndView travelRouteView(String id){
+    public ModelAndView travelRouteView(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",carService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", carService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("car/carView");
@@ -82,11 +82,11 @@ public class CarController extends BaseController {
     }
 
     @RequestMapping("/carEdit")
-    public ModelAndView travelRouteEdit(String id){
+    public ModelAndView travelRouteEdit(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",carService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", carService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("car/carEdit");
@@ -94,16 +94,16 @@ public class CarController extends BaseController {
     }
 
     @RequestMapping("/carSave")
-    public String travelRouteSave(HttpServletRequest request, String id, @RequestParam("fileName") MultipartFile file){
+    public String travelRouteSave(HttpServletRequest request, String id, @RequestParam("fileName") MultipartFile file) {
         Car entity = null;
         try {
-            if(Tools.notEmpty(id)){
+            if (Tools.notEmpty(id)) {
                 entity = carService.findById(id);
-            }else{
+            } else {
                 entity = new Car();
             }
-            this.bindValidateRequestEntity(request,entity);
-            if(file != null && !file.isEmpty()){
+            this.bindValidateRequestEntity(request, entity);
+            if (file != null && !file.isEmpty()) {
                 String fileName = file.getOriginalFilename();
                 int size = (int) file.getSize();
                 System.out.println(fileName + "-->" + size);
@@ -112,7 +112,7 @@ public class CarController extends BaseController {
                 // 输出文件夹绝对路径 – 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
                 System.out.println(fileDir.getAbsolutePath());
                 // 构建真实的文件路径
-                File newFile = new File(fileDir.getAbsolutePath()+"/car" + File.separator + fileName);
+                File newFile = new File(fileDir.getAbsolutePath() + "/car" + File.separator + fileName);
                 // File dest = new File(path + "/" + fileName);
                 if (!newFile.getParentFile().exists()) { //判断文件父目录是否存在
                     newFile.getParentFile().mkdir();
@@ -126,27 +126,27 @@ public class CarController extends BaseController {
                     e.printStackTrace();
                 }
             }
-            if (Tools.isEmpty(entity.getId())){
+            if (Tools.isEmpty(entity.getId())) {
                 entity.setId(Tools.getUUID());
                 carService.save(entity);
-            }else{
+            } else {
                 carService.update(entity);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return REDIRECT+"/manager/carList";
+        return REDIRECT + "/manager/carList";
     }
 
     @RequestMapping("/carDelete")
-    public String travelRouteDelete(String id){
-        if(Tools.notEmpty(id)){
+    public String travelRouteDelete(String id) {
+        if (Tools.notEmpty(id)) {
             try {
                 carService.deleteByid(id);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return REDIRECT+"/manager/carList";
+        return REDIRECT + "/manager/carList";
     }
 }

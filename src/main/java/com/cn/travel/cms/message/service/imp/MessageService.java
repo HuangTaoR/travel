@@ -8,6 +8,7 @@ import com.cn.travel.web.base.PageParam;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,30 +21,31 @@ public class MessageService implements IMessageService {
     @Resource
     private MessageDao messageDao;
 
-    public long count()throws Exception{
-        return  messageDao.count();
+    public long count() throws Exception {
+        return messageDao.count();
     }
 
-    public long countByUserId(String userId)throws Exception{
-        return  messageDao.countByUserId(userId);
+    public long countByUserId(String userId) throws Exception {
+        return messageDao.countByUserId(userId);
     }
 
-    public Message findById(String id)throws Exception{
+    public Message findById(String id) throws Exception {
         return messageDao.findById(id);
     }
 
-    public List<Message> findList()throws Exception{
+    public List<Message> findList() throws Exception {
         return messageDao.findList();
     }
 
-    public void save(Message article)throws Exception{
+    public void save(Message article) throws Exception {
         messageDao.save(article);
     }
 
-    public void update(Message article)throws Exception{
+    public void update(Message article) throws Exception {
         messageDao.update(article);
     }
-    public void deleteByid(String id)throws Exception{
+
+    public void deleteByid(String id) throws Exception {
         messageDao.deleteByid(id);
     }
 
@@ -55,11 +57,11 @@ public class MessageService implements IMessageService {
         } else {
             list = messageDao.findList();
         }
-        PageInfo<Message> pageInfo=new PageInfo<Message>(list);
+        PageInfo<Message> pageInfo = new PageInfo<Message>(list);
         return pageInfo.getList();
     }
 
-    public PageParam<Message> findByPageByUserId(int currentPage, int pageSize, String userId)throws Exception {
+    public PageParam<Message> findByPageByUserId(int currentPage, int pageSize, String userId) throws Exception {
         PageParam<Message> pageParam = new PageParam<>();
         Page page = PageHelper.startPage(currentPage, pageSize);
         List<Message> list = messageDao.findListByUserId(userId);

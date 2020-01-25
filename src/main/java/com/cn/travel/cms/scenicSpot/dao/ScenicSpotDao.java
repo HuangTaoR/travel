@@ -3,6 +3,7 @@ package com.cn.travel.cms.scenicSpot.dao;
 import com.cn.travel.base.dao.BaseDao;
 import com.cn.travel.cms.scenicSpot.entity.ScenicSpot;
 import com.cn.travel.cms.scenicSpot.provider.ScenicSpotSqlProvider;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -41,8 +42,10 @@ public interface ScenicSpotDao extends BaseDao<ScenicSpot> {
 
     @SelectProvider(type = ScenicSpotSqlProvider.class, method = "state0count")
     public long state0count();
+
     @SelectProvider(type = ScenicSpotSqlProvider.class, method = "state1count")
     public long state1count();
+
     @SelectProvider(type = ScenicSpotSqlProvider.class, method = "state2count")
     public long state2count();
 }

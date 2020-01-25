@@ -21,15 +21,15 @@ import com.cn.travel.web.base.PageParam;
 
 @Controller
 @RequestMapping("/manager")
-public class InsuranceController extends BaseController{
+public class InsuranceController extends BaseController {
     @Autowired
     InsuranceService insuranceService;
 
     @RequestMapping("/insuranceList")
-    public ModelAndView insuranceList(PageParam pageParam, @RequestParam(value = "query", required = false) String query){
+    public ModelAndView insuranceList(PageParam pageParam, @RequestParam(value = "query", required = false) String query) {
         ModelAndView mv = this.getModeAndView();
-        if(pageParam.getPageNumber()<1){
-            pageParam =new PageParam();
+        if (pageParam.getPageNumber() < 1) {
+            pageParam = new PageParam();
             long count = 0;
             try {
                 count = insuranceService.count();
@@ -37,15 +37,15 @@ public class InsuranceController extends BaseController{
                 e.printStackTrace();
             }
             pageParam.setCount(count);
-            if(count<=10){
+            if (count <= 10) {
                 pageParam.setSize(1);
-            }else{
-                pageParam.setSize(count%10==0?count/10:count/10+1);
+            } else {
+                pageParam.setSize(count % 10 == 0 ? count / 10 : count / 10 + 1);
             }
             pageParam.setPageNumber(1);
             pageParam.setPageSize(10);
         }
-        List<Insurance> list = insuranceService.findByPage(pageParam.getPageNumber(),pageParam.getPageSize(), query);
+        List<Insurance> list = insuranceService.findByPage(pageParam.getPageNumber(), pageParam.getPageSize(), query);
         mv.addObject("pageData", list);
         if (Tools.notEmpty(query)) {
             mv.addObject("query", query);
@@ -56,25 +56,25 @@ public class InsuranceController extends BaseController{
                 pageParam.setSize(1);
             }
         }
-        mv.addObject("pageParam",pageParam);
+        mv.addObject("pageParam", pageParam);
         mv.setViewName("insurance/insuranceList");
         return mv;
     }
 
     @RequestMapping("/insuranceAdd")
-    public ModelAndView insuranceAdd(){
+    public ModelAndView insuranceAdd() {
         ModelAndView mv = this.getModeAndView();
-        mv.addObject("entity",new Insurance());
+        mv.addObject("entity", new Insurance());
         mv.setViewName("insurance/insuranceEdit");
         return mv;
     }
 
     @RequestMapping("/insuranceView")
-    public ModelAndView insuranceView(String id){
+    public ModelAndView insuranceView(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",insuranceService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", insuranceService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("insurance/insuranceView");
@@ -82,11 +82,11 @@ public class InsuranceController extends BaseController{
     }
 
     @RequestMapping("/insuranceEdit")
-    public ModelAndView insuranceEdit(String id){
+    public ModelAndView insuranceEdit(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",insuranceService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", insuranceService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("insurance/insuranceEdit");
@@ -94,16 +94,16 @@ public class InsuranceController extends BaseController{
     }
 
     @RequestMapping("/insuranceSave")
-    public String insuranceSave(HttpServletRequest request, String id, @RequestParam("fileName") MultipartFile file){
+    public String insuranceSave(HttpServletRequest request, String id, @RequestParam("fileName") MultipartFile file) {
         Insurance entity = null;
         try {
-            if(Tools.notEmpty(id)){
+            if (Tools.notEmpty(id)) {
                 entity = insuranceService.findById(id);
-            }else{
+            } else {
                 entity = new Insurance();
             }
-            this.bindValidateRequestEntity(request,entity);
-            if(file != null && !file.isEmpty()){
+            this.bindValidateRequestEntity(request, entity);
+            if (file != null && !file.isEmpty()) {
                 String fileName = file.getOriginalFilename();
                 int size = (int) file.getSize();
                 System.out.println(fileName + "-->" + size);
@@ -112,7 +112,7 @@ public class InsuranceController extends BaseController{
                 // 输出文件夹绝对路径 – 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
                 System.out.println(fileDir.getAbsolutePath());
                 // 构建真实的文件路径
-                File newFile = new File(fileDir.getAbsolutePath()+"/insurance" + File.separator + fileName);
+                File newFile = new File(fileDir.getAbsolutePath() + "/insurance" + File.separator + fileName);
                 // File dest = new File(path + "/" + fileName);
                 if (!newFile.getParentFile().exists()) { //判断文件父目录是否存在
                     newFile.getParentFile().mkdir();
@@ -127,27 +127,27 @@ public class InsuranceController extends BaseController{
                     e.printStackTrace();
                 }
             }
-            if (Tools.isEmpty(entity.getId())){
+            if (Tools.isEmpty(entity.getId())) {
                 entity.setId(Tools.getUUID());
                 insuranceService.save(entity);
-            }else{
+            } else {
                 insuranceService.update(entity);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return REDIRECT+"/manager/insuranceList";
+        return REDIRECT + "/manager/insuranceList";
     }
 
     @RequestMapping("/insuranceDelete")
-    public String insuranceDelete(String id){
-        if(Tools.notEmpty(id)){
+    public String insuranceDelete(String id) {
+        if (Tools.notEmpty(id)) {
             try {
                 insuranceService.deleteByid(id);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return REDIRECT+"/manager/insuranceList";
+        return REDIRECT + "/manager/insuranceList";
     }
 }

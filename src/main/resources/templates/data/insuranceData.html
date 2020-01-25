@@ -9,9 +9,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="format-detection" content="telephone=no"/>
-    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
-    <link rel="stylesheet" href="/css/font_eolqem241z66flxr.css" media="all" />
-    <link rel="stylesheet" href="/css/main.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/css/font_eolqem241z66flxr.css" media="all"/>
+    <link rel="stylesheet" href="/css/main.css" media="all"/>
 </head>
 <body class="childrenBody">
 <script type="text/javascript" src="/js/echarts.min.js"></script>
@@ -35,64 +35,64 @@
 <div th:text="${company1}" id="t1" hidden></div>
 
 <script type='text/javascript'>
-    var s0=$("#s0").text();
-    var s1=$("#s1").text();
-    var s2=$("#s2").text();
-    var t0=$("#t0").text();
-    var t1=$("#t1").text();
+    var s0 = $("#s0").text();
+    var s1 = $("#s1").text();
+    var s2 = $("#s2").text();
+    var t0 = $("#t0").text();
+    var t1 = $("#t1").text();
 
     /*  s1=parseInt(s1);
     s2=parseInt(s2);*/
-    $(function(){
+    $(function () {
         var data = [
-            {name : '待发布',value : s0,color:'#54c178'},
-            {name : '已发布',value : s1,color:'#9d4a4a'},
-            {name : '已注销',value :s2,color:'#5d7f97'}
+            {name: '待发布', value: s0, color: '#54c178'},
+            {name: '已发布', value: s1, color: '#9d4a4a'},
+            {name: '已注销', value: s2, color: '#5d7f97'}
 
         ];
 
         new iChart.Pie2D({
-            render : 'canvasDiv',
+            render: 'canvasDiv',
             data: data,
-            title : '保险数据分析图',
-            subtitle:'待发布:'+s0+'条,已发布:'+s1+'条,已注销:'+s2+"条",
-            legend : {
-                enable : true
+            title: '保险数据分析图',
+            subtitle: '待发布:' + s0 + '条,已发布:' + s1 + '条,已注销:' + s2 + "条",
+            legend: {
+                enable: true
             },
-            border:{
-                width:0
+            border: {
+                width: 0
             },
-            showpercent:true,
-            decimalsnum:2,
-            width : 800,
-            height : 500,
-            radius:180
+            showpercent: true,
+            decimalsnum: 2,
+            width: 800,
+            height: 500,
+            radius: 180
         }).draw();
     });
-    $(function(){
-        var data2= [
-            {name : '中国平安',value : t0,color:'#54c178'},
-            {name : '中国人寿',value : t1,color:'#9d4a4a'},
+    $(function () {
+        var data2 = [
+            {name: '中国平安', value: t0, color: '#54c178'},
+            {name: '中国人寿', value: t1, color: '#9d4a4a'},
 
 
         ];
 
         new iChart.Pie2D({
-            render : 'canvasDiv2',
+            render: 'canvasDiv2',
             data: data2,
-            title : '保险数据分析图',
-            subtitle:'中国平安:'+t0+'条,中国人寿:'+t1+'条:',
-            legend : {
-                enable : true
+            title: '保险数据分析图',
+            subtitle: '中国平安:' + t0 + '条,中国人寿:' + t1 + '条:',
+            legend: {
+                enable: true
             },
-            border:{
-                width:0
+            border: {
+                width: 0
             },
-            showpercent:true,
-            decimalsnum:2,
-            width : 800,
-            height : 500,
-            radius:180
+            showpercent: true,
+            decimalsnum: 2,
+            width: 800,
+            height: 500,
+            radius: 180
         }).draw();
     });
 </script>

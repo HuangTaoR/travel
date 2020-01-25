@@ -4,6 +4,7 @@ import com.cn.travel.base.dao.BaseDao;
 import com.cn.travel.role.user.entity.Porvice;
 import com.cn.travel.role.user.entity.User;
 import com.cn.travel.role.user.provider.UserSqlProvider;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +39,7 @@ public interface UserDao extends BaseDao<User> {
     public void update(User user);
 
     @UpdateProvider(type = UserSqlProvider.class, method = "deleteByid")
-    public void deleteByid(@Param("id")String id);
+    public void deleteByid(@Param("id") String id);
 
     @SelectProvider(type = UserSqlProvider.class, method = "countPorvice")
     public List<Porvice> countPorvice();

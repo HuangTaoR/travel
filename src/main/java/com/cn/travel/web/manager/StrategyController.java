@@ -21,16 +21,16 @@ import com.cn.travel.web.base.PageParam;
 
 @Controller
 @RequestMapping("/manager")
-public class StrategyController  extends BaseController {
+public class StrategyController extends BaseController {
 
     @Autowired
     StrategyService strategyService;
 
     @RequestMapping("/strategyList")
-    public ModelAndView strategyList(PageParam pageParam, @RequestParam(value = "query", required = false) String query){
+    public ModelAndView strategyList(PageParam pageParam, @RequestParam(value = "query", required = false) String query) {
         ModelAndView mv = this.getModeAndView();
-        if(pageParam.getPageNumber()<1){
-            pageParam =new PageParam();
+        if (pageParam.getPageNumber() < 1) {
+            pageParam = new PageParam();
             long count = 0;
             try {
                 count = strategyService.count();
@@ -38,15 +38,15 @@ public class StrategyController  extends BaseController {
                 e.printStackTrace();
             }
             pageParam.setCount(count);
-            if(count<=10){
+            if (count <= 10) {
                 pageParam.setSize(1);
-            }else{
-                pageParam.setSize(count%10==0?count/10:count/10+1);
+            } else {
+                pageParam.setSize(count % 10 == 0 ? count / 10 : count / 10 + 1);
             }
             pageParam.setPageNumber(1);
             pageParam.setPageSize(10);
         }
-        List<Strategy> list = strategyService.findByPage(pageParam.getPageNumber(),pageParam.getPageSize(), query);
+        List<Strategy> list = strategyService.findByPage(pageParam.getPageNumber(), pageParam.getPageSize(), query);
         mv.addObject("pageData", list);
         if (Tools.notEmpty(query)) {
             mv.addObject("query", query);
@@ -57,25 +57,25 @@ public class StrategyController  extends BaseController {
                 pageParam.setSize(1);
             }
         }
-        mv.addObject("pageParam",pageParam);
+        mv.addObject("pageParam", pageParam);
         mv.setViewName("strategy/strategyList");
         return mv;
     }
 
     @RequestMapping("/strategyAdd")
-    public ModelAndView strategyAdd(){
+    public ModelAndView strategyAdd() {
         ModelAndView mv = this.getModeAndView();
-        mv.addObject("entity",new Strategy());
+        mv.addObject("entity", new Strategy());
         mv.setViewName("strategy/strategyEdit");
         return mv;
     }
 
     @RequestMapping("/strategyView")
-    public ModelAndView scenicSpotView(String id){
+    public ModelAndView scenicSpotView(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",strategyService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", strategyService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("strategy/strategyView");
@@ -83,11 +83,11 @@ public class StrategyController  extends BaseController {
     }
 
     @RequestMapping("/strategyEdit")
-    public ModelAndView scenicSpotEdit(String id){
+    public ModelAndView scenicSpotEdit(String id) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",strategyService.findById(id));
-        }catch (Exception e){
+            mv.addObject("entity", strategyService.findById(id));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("strategy/strategyEdit");
@@ -96,16 +96,16 @@ public class StrategyController  extends BaseController {
 
     @RequestMapping("/strategySave")
     public String strategySave(HttpServletRequest request, String id, @RequestParam("fileName1") MultipartFile file1,
-                               @RequestParam("fileName2") MultipartFile file2){
+            @RequestParam("fileName2") MultipartFile file2) {
         Strategy entity = null;
         try {
-            if(Tools.notEmpty(id)){
+            if (Tools.notEmpty(id)) {
                 entity = strategyService.findById(id);
-            }else{
+            } else {
                 entity = new Strategy();
             }
-            this.bindValidateRequestEntity(request,entity);
-            if(file1!= null && !file1.isEmpty()){
+            this.bindValidateRequestEntity(request, entity);
+            if (file1 != null && !file1.isEmpty()) {
                 String fileName = file1.getOriginalFilename();
                 int size = (int) file1.getSize();
                 System.out.println(fileName + "-->" + size);
@@ -114,7 +114,7 @@ public class StrategyController  extends BaseController {
                 // 输出文件夹绝对路径 – 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
                 System.out.println(fileDir.getAbsolutePath());
                 // 构建真实的文件路径
-                File newFile = new File(fileDir.getAbsolutePath()+"/strategy" + File.separator + fileName);
+                File newFile = new File(fileDir.getAbsolutePath() + "/strategy" + File.separator + fileName);
                 // File dest = new File(path + "/" + fileName);
                 if (!newFile.getParentFile().exists()) { //判断文件父目录是否存在
                     newFile.getParentFile().mkdir();
@@ -129,7 +129,7 @@ public class StrategyController  extends BaseController {
                     e.printStackTrace();
                 }
             }
-            if(file2!= null && !file2.isEmpty()){
+            if (file2 != null && !file2.isEmpty()) {
                 String fileName = file2.getOriginalFilename();
                 int size = (int) file2.getSize();
                 System.out.println(fileName + "-->" + size);
@@ -138,7 +138,7 @@ public class StrategyController  extends BaseController {
                 // 输出文件夹绝对路径 – 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
                 System.out.println(fileDir.getAbsolutePath());
                 // 构建真实的文件路径
-                File newFile = new File(fileDir.getAbsolutePath()+"/strategy" + File.separator + fileName);
+                File newFile = new File(fileDir.getAbsolutePath() + "/strategy" + File.separator + fileName);
                 // File dest = new File(path + "/" + fileName);
                 if (!newFile.getParentFile().exists()) { //判断文件父目录是否存在
                     newFile.getParentFile().mkdir();
@@ -153,29 +153,29 @@ public class StrategyController  extends BaseController {
                     e.printStackTrace();
                 }
             }
-            if (Tools.isEmpty(entity.getId())){
+            if (Tools.isEmpty(entity.getId())) {
                 entity.setId(Tools.getUUID());
                 strategyService.save(entity);
-            }else{
+            } else {
                 strategyService.update(entity);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return REDIRECT+"/manager/strategyList";
+        return REDIRECT + "/manager/strategyList";
     }
 
     @RequestMapping("/strategyDelete")
-    public String strategyDelete(String id){
-        if(Tools.notEmpty(id)){
+    public String strategyDelete(String id) {
+        if (Tools.notEmpty(id)) {
             try {
                 strategyService.deleteByid(id);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return REDIRECT+"/manager/strategyList";
+        return REDIRECT + "/manager/strategyList";
     }
 
 }

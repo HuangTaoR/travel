@@ -3,6 +3,7 @@ package com.cn.travel.cms.travelRoute.dao;
 import com.cn.travel.base.dao.BaseDao;
 import com.cn.travel.cms.travelRoute.entity.TravelRoute;
 import com.cn.travel.cms.travelRoute.provider.TravelRouteSqlProvider;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -41,8 +42,10 @@ public interface TravelRouteDao extends BaseDao<TravelRoute> {
 
     @SelectProvider(type = TravelRouteSqlProvider.class, method = "state0count")
     public long state0count();
+
     @SelectProvider(type = TravelRouteSqlProvider.class, method = "state1count")
     public long state1count();
+
     @SelectProvider(type = TravelRouteSqlProvider.class, method = "state2count")
     public long state2count();
 }

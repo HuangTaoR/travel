@@ -1,8 +1,10 @@
 package com.cn.travel.common;
 
 import java.util.Properties;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import com.github.pagehelper.PageHelper;
 
 /*
@@ -20,7 +22,7 @@ public class MybatisConf {
         properties.setProperty("supportMethodsArguments", "true");
         properties.setProperty("returnPageInfo", "check");
         properties.setProperty("params", "count=countSql");
-        properties.setProperty("dialect","mysql");    //配置mysql数据库的方言
+        properties.setProperty("dialect", "mysql");    //配置mysql数据库的方言
         pageHelper.setProperties(properties);
         return pageHelper;
     }

@@ -4,6 +4,7 @@ import com.cn.travel.role.user.entity.User;
 import com.cn.travel.role.user.service.imp.UserService;
 import com.cn.travel.utils.Tools;
 import com.cn.travel.web.base.BaseController;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,25 +22,25 @@ public class UserPortalController extends BaseController {
     UserService userService;
 
     @RequestMapping("/userLoging")
-    public ModelAndView userLoging(String userName,String password,RedirectAttributes redirectAttributes,HttpSession httpSession){
-        if(Tools.notEmpty(httpSession.getAttribute("userName"))){
+    public ModelAndView userLoging(String userName, String password, RedirectAttributes redirectAttributes, HttpSession httpSession) {
+        if (Tools.notEmpty(httpSession.getAttribute("userName"))) {
             return new ModelAndView(new RedirectView("/userCenter"));
         }
-        if (Tools.isEmpty(userName)||Tools.isEmpty(password)){
-            redirectAttributes.addFlashAttribute("message","用户名密码不得为空!");
+        if (Tools.isEmpty(userName) || Tools.isEmpty(password)) {
+            redirectAttributes.addFlashAttribute("message", "用户名密码不得为空!");
             return new ModelAndView(new RedirectView("/goLogin"));
         }
         try {
             User user = userService.login(userName, password);
-            if (Tools.isEmpty(user)){
-                redirectAttributes.addFlashAttribute("message","用户名不存在或密码错误!");
+            if (Tools.isEmpty(user)) {
+                redirectAttributes.addFlashAttribute("message", "用户名不存在或密码错误!");
                 return new ModelAndView(new RedirectView("/goLogin"));
-            }else{
+            } else {
                 if (user.getState() == 1) {
-                    httpSession.setAttribute("userName",userName);
+                    httpSession.setAttribute("userName", userName);
                     return new ModelAndView(new RedirectView("/userCenter"));
                 } else {
-                    redirectAttributes.addFlashAttribute("message","账户已被注销!");
+                    redirectAttributes.addFlashAttribute("message", "账户已被注销!");
                     return new ModelAndView(new RedirectView("/goLogin"));
                 }
             }
@@ -50,27 +51,27 @@ public class UserPortalController extends BaseController {
     }
 
     @RequestMapping("/register")
-    public ModelAndView register(){
+    public ModelAndView register() {
         ModelAndView mv = this.getModeAndView();
         mv.setViewName("portal/register");
         return mv;
     }
 
     @RequestMapping("/registering")
-    public ModelAndView registering(HttpServletRequest request, String checkPassword, RedirectAttributes redirectAttributes) throws Exception{
+    public ModelAndView registering(HttpServletRequest request, String checkPassword, RedirectAttributes redirectAttributes) throws Exception {
         User user = new User();
-        this.bindValidateRequestEntity(request,user);
-        if(Tools.isEmpty(user)){
-            redirectAttributes.addFlashAttribute("message","用户名密码不得为空!");
+        this.bindValidateRequestEntity(request, user);
+        if (Tools.isEmpty(user)) {
+            redirectAttributes.addFlashAttribute("message", "用户名密码不得为空!");
             return new ModelAndView(new RedirectView("/register"));
         }
-        if(!user.getPassword().equals(checkPassword)){
-            redirectAttributes.addFlashAttribute("message","密码与确认密码不一致!");
+        if (!user.getPassword().equals(checkPassword)) {
+            redirectAttributes.addFlashAttribute("message", "密码与确认密码不一致!");
             return new ModelAndView(new RedirectView("/register"));
         }
         User entity = userService.findByUserName(user.getUserName());
         if (entity != null) {
-            redirectAttributes.addFlashAttribute("message","用户名已存在!");
+            redirectAttributes.addFlashAttribute("message", "用户名已存在!");
             return new ModelAndView(new RedirectView("/register"));
         }
         try {
@@ -80,16 +81,16 @@ public class UserPortalController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        redirectAttributes.addFlashAttribute("message","注册成功，请登陆!");
+        redirectAttributes.addFlashAttribute("message", "注册成功，请登陆!");
         return new ModelAndView(new RedirectView("/goLogin"));
     }
 
     @RequestMapping("/personInfo")
-    public ModelAndView personInfo(HttpSession httpSession){
+    public ModelAndView personInfo(HttpSession httpSession) {
         ModelAndView mv = this.getModeAndView();
         try {
-            mv.addObject("entity",userService.findByUserName(httpSession.getAttribute("userName").toString()));
-        }catch (Exception e){
+            mv.addObject("entity", userService.findByUserName(httpSession.getAttribute("userName").toString()));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mv.setViewName("portal/personalIntro");
@@ -97,45 +98,45 @@ public class UserPortalController extends BaseController {
     }
 
     @RequestMapping("/personSave")
-    public String personSave(HttpServletRequest request, String id){
+    public String personSave(HttpServletRequest request, String id) {
         User entity = null;
-        try{
-            if(Tools.notEmpty(id)){
+        try {
+            if (Tools.notEmpty(id)) {
                 entity = userService.findById(id);
             }
-            this.bindValidateRequestEntity(request,entity);
+            this.bindValidateRequestEntity(request, entity);
             userService.update(entity);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return REDIRECT+"/userCenter";
+        return REDIRECT + "/userCenter";
     }
 
     @RequestMapping("/changePassword")
-    public ModelAndView changePassword(HttpSession httpSession){
+    public ModelAndView changePassword(HttpSession httpSession) {
         ModelAndView mv = this.getModeAndView();
         mv.setViewName("portal/changePassword");
         return mv;
     }
 
     @RequestMapping("/changePasswordSave")
-    public ModelAndView changePasswordSave(String password,String newPassword,String checkPassword,HttpSession httpSession) throws Exception {
+    public ModelAndView changePasswordSave(String password, String newPassword, String checkPassword, HttpSession httpSession) throws Exception {
         ModelAndView mv = this.getModeAndView();
-        if(Tools.isEmpty(password)||Tools.isEmpty(newPassword)||Tools.isEmpty(checkPassword)){
-            mv.addObject("message","密码输入不能为空！");
+        if (Tools.isEmpty(password) || Tools.isEmpty(newPassword) || Tools.isEmpty(checkPassword)) {
+            mv.addObject("message", "密码输入不能为空！");
             mv.setViewName("portal/changePassword");
             return mv;
         }
         User user = userService.findByUserName(httpSession.getAttribute("userName").toString());
-        if(!user.getPassword().equals(password)){
-            mv.addObject("message","原密码输入不正确！");
+        if (!user.getPassword().equals(password)) {
+            mv.addObject("message", "原密码输入不正确！");
             mv.setViewName("portal/changePassword");
             return mv;
-        }else if(!newPassword.equals(checkPassword)){
-            mv.addObject("message","新密码与确认密码不一致！");
+        } else if (!newPassword.equals(checkPassword)) {
+            mv.addObject("message", "新密码与确认密码不一致！");
             mv.setViewName("portal/changePassword");
             return mv;
-        }else{
+        } else {
             user.setPassword(newPassword);
             userService.update(user);
         }

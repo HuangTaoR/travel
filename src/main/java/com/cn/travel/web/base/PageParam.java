@@ -5,77 +5,80 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 
 public class PageParam<T> {
-   //当前页面
-	private int pageNumber;
-	//一页多少条数据
-	private int pageSize;
-	//多少页
-	private long size;
-	//多少条数据
-	private long count;
-	
-	private int offset;
-	
-	private Sort sort;
+    //当前页面
+    private int pageNumber;
 
-	private List<T> result;
+    //一页多少条数据
+    private int pageSize;
 
-	public PageParam() {
-	}
+    //多少页
+    private long size;
 
-	public int getPageNumber() {
-		return pageNumber;
-	}
+    //多少条数据
+    private long count;
 
-	public void setPageNumber(int pageNumber) {
-		this.pageNumber = pageNumber;
-	}
+    private int offset;
 
-	public int getPageSize() {
-		return pageSize;
-	}
+    private Sort sort;
 
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
+    private List<T> result;
 
-	public long getSize() {
-		return size;
-	}
+    public PageParam() {
+    }
 
-	public void setSize(long size) {
-		this.size = size;
-	}
+    public int getPageNumber() {
+        return pageNumber;
+    }
 
-	public long getCount() {
-		return count;
-	}
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
 
-	public void setCount(long count) {
-		this.count = count;
-	}
+    public int getPageSize() {
+        return pageSize;
+    }
 
-	public int getOffset() {
-		return offset;
-	}
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
-	public void setOffset(int offset) {
-		this.offset = offset;
-	}
+    public long getSize() {
+        return size;
+    }
 
-	public Sort getSort() {
-		return sort;
-	}
+    public void setSize(long size) {
+        this.size = size;
+    }
 
-	public void setSort(Sort sort) {
-		this.sort = sort;
-	}
+    public long getCount() {
+        return count;
+    }
 
-	public List<T> getResult() {
-		return result;
-	}
+    public void setCount(long count) {
+        this.count = count;
+    }
 
-	public void setResult(List<T> result) {
-		this.result = result;
-	}
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public Sort getSort() {
+        return sort;
+    }
+
+    public void setSort(Sort sort) {
+        this.sort = sort;
+    }
+
+    public List<T> getResult() {
+        return result;
+    }
+
+    public void setResult(List<T> result) {
+        this.result = result;
+    }
 }

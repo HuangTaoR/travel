@@ -8,6 +8,7 @@ import com.cn.travel.cms.strategy.entity.Strategy;
 import com.cn.travel.utils.Tools;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,27 +21,27 @@ public class CarService implements ICarService {
     @Resource
     private CarDao carDao;
 
-    public long count()throws Exception{
-        return  carDao.count();
+    public long count() throws Exception {
+        return carDao.count();
     }
 
-
-    public Car findById(String id)throws Exception{
+    public Car findById(String id) throws Exception {
         return carDao.findById(id);
     }
 
-    public List<Car> findList()throws Exception{
+    public List<Car> findList() throws Exception {
         return carDao.findList();
     }
 
-    public void save(Car car)throws Exception{
+    public void save(Car car) throws Exception {
         carDao.save(car);
     }
 
-    public void update(Car car)throws Exception{
+    public void update(Car car) throws Exception {
         carDao.update(car);
     }
-    public void deleteByid(String id)throws Exception{
+
+    public void deleteByid(String id) throws Exception {
         carDao.deleteByid(id);
     }
 
@@ -52,7 +53,7 @@ public class CarService implements ICarService {
         } else {
             list = carDao.findList();
         }
-        PageInfo<Car> pageInfo=new PageInfo<Car>(list);
+        PageInfo<Car> pageInfo = new PageInfo<Car>(list);
         return pageInfo.getList();
     }
 
@@ -60,29 +61,31 @@ public class CarService implements ICarService {
         List<Car> list = new ArrayList<Car>();
         PageHelper.startPage(currentPage, pageSize);
         list = carDao.indexList();
-        PageInfo<Car> pageInfo=new PageInfo<Car>(list);
+        PageInfo<Car> pageInfo = new PageInfo<Car>(list);
         return pageInfo.getList();
     }
 
-
-    public long state0count()throws Exception{
-        return  carDao.state0count();
-    }
-    public long state1count()throws Exception{
-        return  carDao.state1count();
-    }
-    public long state2count()throws Exception{
-        return  carDao.state2count();
+    public long state0count() throws Exception {
+        return carDao.state0count();
     }
 
+    public long state1count() throws Exception {
+        return carDao.state1count();
+    }
 
-    public long type0count()throws Exception{
-        return  carDao.type0count();
+    public long state2count() throws Exception {
+        return carDao.state2count();
     }
-    public long type1count()throws Exception{
-        return  carDao.type1count();
+
+    public long type0count() throws Exception {
+        return carDao.type0count();
     }
-    public long type2count()throws Exception{
-        return  carDao.type2count();
+
+    public long type1count() throws Exception {
+        return carDao.type1count();
+    }
+
+    public long type2count() throws Exception {
+        return carDao.type2count();
     }
 }

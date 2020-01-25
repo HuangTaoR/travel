@@ -1,6 +1,7 @@
 package com.cn.travel.web.base;
 
 import com.google.common.collect.Lists;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
@@ -16,11 +17,14 @@ import java.util.concurrent.locks.ReentrantLock;
 @Controller
 public class BaseController {
     private static Lock lock = new ReentrantLock();
+
     private static List<ModelAndView> modeAndViewsPool = Lists.newArrayListWithCapacity(20);
+
     /**
      * 重定向标记(客户端行为)
      */
     public static final String REDIRECT = "redirect:";
+
     /**
      * 数据转换组件
      */
@@ -29,15 +33,16 @@ public class BaseController {
 
     /**
      * 取ModelAndView
+     *
      * @return
      */
-   public static ModelAndView getModeAndView() {
+    public static ModelAndView getModeAndView() {
         try {
             lock.lock();
             if (modeAndViewsPool.size() > 0) {
                 return modeAndViewsPool.remove(0);
             }
-        }finally{
+        } finally {
             lock.unlock();
         }
         return new ModelAndView();
@@ -45,6 +50,7 @@ public class BaseController {
 
     /**
      * 邦定表单数据并且校验数据
+     *
      * @param request
      * @param entity
      * @throws ConstraintViolationException
