@@ -5,7 +5,9 @@
     <title>中国梦想游--旅游景点页</title>
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
     <link href="css/common.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="js/sweetalert/sweetalert.css">
     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/sweetalert/sweetalert.min.js"></script>
     <script type="text/javascript">
         $(function () {
             var wweya_li = $("div.tab_menu ul li");
@@ -107,7 +109,7 @@
                     <p></p>
                 </div>
                 <div class="xq_button">
-                    <a th:if="${session.userName!=null}" th:href="@{/travelSpotCreatOrder(id=${entity.id})}">
+                    <a th:if="${session.userName!=null}" th:onclick="'openSweetAlertWithConfirm(\'' + ${entity.id} + '\')'" href="javascript:void(0);">
                         <img src="images/order_button.jpg"/></a>
                     <p th:if="${session.userName==null}"><font color="red">预定请先登陆</font></p>
                     <p th:if="${CreatSuccess==true}"><font color="red">预定成功，请前往会员中心-我的订单查看订单</font></p></div>
@@ -124,5 +126,21 @@
 
 <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=3&amp;lang=zh"></script>
 <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+<script th:inline="javascript">
+    function openSweetAlertWithConfirm(userId) {
+        swal({
+            title: "确认弹框",
+            text: "确认要预定吗?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((flag) => {
+            if(flag) {
+                swal("恭喜，预定成功");
+                window.location.href="/travelSpotCreatOrder?id="+userId;
+            }else{
+                swal("已取消预定");}});
+    }
+</script>
 </body>
 </html>

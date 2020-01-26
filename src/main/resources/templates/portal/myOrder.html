@@ -5,6 +5,9 @@
     <title>中国梦想游-会员登录页</title>
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
     <link href="css/common.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="js/sweetalert/sweetalert.css">
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/sweetalert/sweetalert.min.js"></script>
 </head>
 <body>
 <div class="top_hw clearfix">
@@ -100,8 +103,8 @@
                             <div class="for_t3" th:if="${var.state==0}">待付款</div>
                             <div class="for_t3" th:if="${var.state==1}">已付款</div>
                             <div class="for_t3" th:if="${var.state==2}">已撤销</div>
-                            <div class="for_t3"><a th:if="${var.state==0}" th:href="@{/payOrder(id=${var.id})}">付款</a><br>
-                                <a th:if="${var.state==0}" th:href="@{/deleteOrder(id=${var.id})}">撤销</a>
+                            <div class="for_t3"><a th:if="${var.state==0}" th:onclick="'payConfirm(\'' + ${entity.id} + '\')'" href="javascript:void(0);">付款</a><br>
+                                <a th:if="${var.state==0}" th:onclick="'cancelConfirm(\'' + ${entity.id} + '\')'" href="javascript:void(0);">撤销</a>
                             </div>
                             <br style="clear:both"/>
                         </div>
@@ -176,5 +179,35 @@
         <br style="clear:both"/>
     </div>
 </div>-->
+<script th:inline="javascript">
+    function payConfirm(userId) {
+        swal({
+            title: "确认弹框",
+            text: "确认要支付吗?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((flag) => {
+            if(flag) {
+                swal("恭喜，支付成功");
+                window.location.href="/payOrder?id="+userId;
+            }else{
+                swal("已取消支付");}});
+    }
+    function cancelConfirm(userId) {
+        swal({
+            title: "确认弹框",
+            text: "确认要撤销吗?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((flag) => {
+            if(flag) {
+                swal("恭喜，撤销成功");
+                window.location.href="/deleteOrder?id="+userId;
+            }else{
+                swal("已取消撤销");}});
+    }
+</script>
 </body>
 </html>

@@ -5,7 +5,9 @@
     <title>中国梦想游--旅游路线页</title>
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
     <link href="css/common.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="js/sweetalert/sweetalert.css">
     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/sweetalert/sweetalert.min.js"></script>
     <script type="text/javascript">
         $(function () {
             var wweya_li = $("div.tab_menu ul li");
@@ -76,7 +78,7 @@
         <div class="clumn_r">
             <div class="tc_tit" th:text="${entity.title}"></div>
             <div class="xq_wrap clearfix">
-                <div class="xq_left"><img th:src="${entity.imgUrl}"/></div>
+                <div class="xq_left"><img style="height: 75px;width: 150px;" th:src="${entity.imgUrl}"/></div>
                 <div class="xq_right">
                     <div class="xq_detail">
 
@@ -95,7 +97,7 @@
                     <!--<div class="share">
                         <div class="bshare-custom"><strong>分享到&nbsp;&nbsp;</strong><a title="分享到QQ空间" class="bshare-qzone"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到人人网" class="bshare-renren"></a><a title="分享到腾讯微博" class="bshare-qqmb"></a><a title="分享到网易微博" class="bshare-neteasemb"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span></div>
                     </div>-->
-                    <div class="xq_button"><a th:if="${session.userName!=null}" th:href="@{/carCreatOrder(id=${entity.id})}">
+                    <div class="xq_button"><a th:onclick="'openSweetAlertWithConfirm(\'' + ${entity.id} + '\')'" th:if="${session.userName!=null}" href="javascript:void(0);">
                         <img src="images/order_button.jpg"/></a>
                         <p th:if="${session.userName==null}"><font color="red"> 预定请先登陆</font></p>
                         <p th:if="${CreatSuccess==true}"><font color="red">预定成功，请前往会员中心-我的订单查看订单</font></p></div>
@@ -157,6 +159,20 @@
     function search(start, end, route) {
         var driving = new BMap.DrivingRoute(map, {renderOptions: {map: map, autoViewport: true}, policy: route});
         driving.search(start, end);
+    }
+    function openSweetAlertWithConfirm(userId) {
+        swal({
+            title: "确认弹框",
+            text: "确认要预定吗?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((flag) => {
+            if(flag) {
+                swal("恭喜，预定成功");
+                window.location.href="/carCreatOrder?id="+userId;
+            }else{
+                swal("已取消预定");}});
     }
 </script>
 </body>

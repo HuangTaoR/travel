@@ -144,7 +144,7 @@
                 </div>
                 <div class="js_wrap claerdix">
                     <div class="js_con clearfix" th:each="var,iterStat: ${pageData}">
-                        <div class="js_l"><a th:href="@{/strategyPortalView(id=${var.id})}"><img th:src="${var.imgUrl}" style="    height: 75px;"/></a></div>
+                        <div class="js_l"><a th:href="@{/strategyPortalView(id=${var.id})}"><img th:src="${var.imgUrl}" style="height: 75px;width: 150px;"/></a></div>
                         <div class="js_c">
                             <p><b><a th:href="@{/strategyPortalView(id=${var.id})}" th:text="${var.title}"></a></b></p>
                             <p th:text="'简介：'+${var.summary}"></p>

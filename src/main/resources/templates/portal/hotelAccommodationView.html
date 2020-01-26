@@ -5,6 +5,9 @@
     <title>餐饮住宿-详情页</title>
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
     <link href="css/common.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="js/sweetalert/sweetalert.css">
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/sweetalert/sweetalert.min.js"></script>
 </head>
 <body>
 <div class="top_hw clearfix">
@@ -57,7 +60,7 @@
             <div class="cr_tit"><b>酒店详情</b>
                 <b th:if="${CreatSuccess==true}">您已预定成功，请前往会员中心-我的订单查看订单</b>
                 <span th:if="${session.userName!=null}">
-                    <a th:href="@{/goReserve(id=${entity.id})}">酒店预定</a></span></div>
+                    <a th:onclick="'openSweetAlertWithConfirm(\'' + ${entity.id} + '\')'" href="javascript:void(0);">酒店预定</a></span></div>
             <div class="cr_wrap">
                 <div class="cr_t">
                     <div class="ct" th:text="${entity.hotelName}"></div>
@@ -103,5 +106,21 @@
         <div class="f_logo"><img src="images/b_logo.jpg"/></div>
     </div>
 </div>-->
+<script th:inline="javascript">
+    function openSweetAlertWithConfirm(userId) {
+        swal({
+            title: "确认弹框",
+            text: "确认要预定吗?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((flag) => {
+            if(flag) {
+                swal("恭喜，预定成功");
+                window.location.href="/goReserve?id="+userId;
+            }else{
+                swal("已取消预定");}});
+    }
+</script>
 </body>
 </html>
