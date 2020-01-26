@@ -19,6 +19,8 @@ public class User extends BaseDomain {
 
     private Integer province;
 
+    private String role;
+
     public String getUserName() {
         return userName;
     }
@@ -73,5 +75,13 @@ public class User extends BaseDomain {
 
     public void setProvince(Integer province) {
         this.province = province;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

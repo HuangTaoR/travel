@@ -109,6 +109,16 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">角色</label>
+        <div class="layui-input-inline">
+            <select id="role" name="role" class="newsLook" lay-filter="browseLook">
+                <option th:selected="${entity.role=='ROLE_GUID'?'selected':'false'}" value="ROLE_GUID">导游</option>
+                <option th:selected="${entity.role=='ROLE_DRIVER'?'selected':'false'}" value="ROLE_DRIVER">目的地司机</option>
+                <option th:selected="${entity.role=='ROLE_COMMON'?'selected':'false'}" value="ROLE_COMMON">普通用户</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" type="submit" lay-submit="">保存</button>
             <a class="layui-btn" th:href="@{/manager/userList}">返回</a>

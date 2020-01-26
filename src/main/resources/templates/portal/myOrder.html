@@ -103,8 +103,8 @@
                             <div class="for_t3" th:if="${var.state==0}">待付款</div>
                             <div class="for_t3" th:if="${var.state==1}">已付款</div>
                             <div class="for_t3" th:if="${var.state==2}">已撤销</div>
-                            <div class="for_t3"><a th:if="${var.state==0}" th:onclick="'payConfirm(\'' + ${entity.id} + '\')'" href="javascript:void(0);">付款</a><br>
-                                <a th:if="${var.state==0}" th:onclick="'cancelConfirm(\'' + ${entity.id} + '\')'" href="javascript:void(0);">撤销</a>
+                            <div class="for_t3"><a th:if="${var.state==0}" th:onclick="'payConfirm(\'' + ${var.id} + '\')'" href="javascript:void(0);">付款</a><br>
+                                <a th:if="${var.state==0}" th:onclick="'cancelConfirm(\'' + ${var.id} + '\')'" href="javascript:void(0);">撤销</a>
                             </div>
                             <br style="clear:both"/>
                         </div>

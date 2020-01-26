@@ -54,4 +54,5 @@ public class Admin extends BaseDomain {
     public void setState(Integer state) {
         this.state = state;
     }
+
 }
