@@ -1,9 +1,7 @@
 package com.cn.travel.web.portal;
 
-import com.cn.travel.role.user.entity.User;
-import com.cn.travel.role.user.service.imp.UserService;
-import com.cn.travel.utils.Tools;
-import com.cn.travel.web.base.BaseController;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +10,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import com.cn.travel.role.user.entity.User;
+import com.cn.travel.role.user.service.imp.UserService;
+import com.cn.travel.utils.Tools;
+import com.cn.travel.web.base.BaseController;
+import com.cn.travel.web.base.PageParam;
 
 @Controller
 public class UserPortalController extends BaseController {
@@ -141,6 +142,32 @@ public class UserPortalController extends BaseController {
             userService.update(user);
         }
         mv.setViewName("portal/userCenter");
+        return mv;
+    }
+
+    @RequestMapping("/user")
+    public ModelAndView travelRoute(PageParam pageParam) {
+        ModelAndView mv = this.getModeAndView();
+        if (pageParam.getPageNumber() < 1) {
+            pageParam = new PageParam();
+            long count = 0;
+            try {
+                count = userService.state1count();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            pageParam.setCount(count);
+            if (count <= 7) {
+                pageParam.setSize(1);
+            } else {
+                pageParam.setSize(count % 7 == 0 ? count / 7 : count / 7 + 1);
+            }
+            pageParam.setPageNumber(1);
+            pageParam.setPageSize(7);
+        }
+        mv.addObject("pageData", userService.findByPageInCondition(pageParam.getPageNumber(), pageParam.getPageSize()));
+        mv.addObject("pageParam", pageParam);
+        mv.setViewName("portal/user");
         return mv;
     }
 }

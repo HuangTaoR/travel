@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>旅游景点页</title>
+    <title>导游司机页</title>
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
     <link href="css/common.css" rel="stylesheet" type="text/css"/>
     <style>
@@ -90,45 +90,43 @@
     <ul class="Nav_ul">
         <li><a th:href="@{/index}">首页</a><img src="images/nav_line.jpg"/></li>
         <li><a th:href="@{/travelRoute}">旅游路线</a><img src="images/nav_line.jpg"/></li>
-        <li class="cur"><a th:href="@{/travelSpot}">旅游景点</a><img src="images/nav_line.jpg"/></li>
+        <li><a th:href="@{/travelSpot}">旅游景点</a><img src="images/nav_line.jpg"/></li>
         <li><a th:href="@{/hotelAccommodation}">餐饮住宿</a><img src="images/nav_line.jpg"/></li>
         <li><a th:href="@{/car}">旅游车票</a><img src="images/nav_line.jpg"/></li>
         <li><a th:href="@{/insurance}">旅游保险</a><img src="images/nav_line.jpg"/></li>
         <li><a th:href="@{/strategy}">旅游攻略</a><img src="images/nav_line.jpg"/></li>
-        <li><a th:href="@{/user}">导游司机</a><img src="images/nav_line.jpg"/></li>
+        <li class="cur"><a th:href="@{/user}">导游司机</a><img src="images/nav_line.jpg"/></li>
         <li><a th:href="@{/attention}">注意事项</a><img src="images/nav_line.jpg"/></li>
         <li th:if="${session.userName!=null}"><a th:href="@{/userCenter}">会员中心</a><img src="images/nav_line.jpg"/></li>
     </ul>
 </div>
 <div class="b_wrap">
-    <div class="current"><span>当前所在地：</span><a th:href="@{/index}">首页</a> >> <a th:href="@{/travelSpot}">旅游景点</a></div>
+    <div class="current"><span>当前所在地：</span><a th:href="@{/index}">首页</a> >> <a th:href="@{/hotelAccommodation}">餐饮住宿</a></div>
 
     <div class="clumn_w clearfix">
         <div class="clumn_l">
             <div class="clumn">
-                <div class="clumn_tit t01">旅游景点</div>
+                <div class="clumn_tit t01">导游司机</div>
                 <div class="clumn_con">
-                    <div class="cln_w">
-                        <p>热门景点</p>
-                        <div class="cln_c clearfix">
-                            <a href="https://baike.baidu.com/item/%E9%95%BF%E5%9F%8E/14251" target="_blank">长城</a>
-                            <a href="https://baike.baidu.com/item/%E5%85%B5%E9%A9%AC%E4%BF%91/60649" target="_blank">兵马俑</a>
-                            <a href="https://baike.baidu.com/item/%E8%A5%BF%E6%B9%96/4668821" target="_blank">杭州西湖</a>
-                            <a href="https://baike.baidu.com/item/%E7%8F%A0%E7%A9%86%E6%9C%97%E7%8E%9B%E5%B3%B0/3058" target="_blank">珠穆朗玛峰</a>
-                            <a href="https://baike.baidu.com/item/%E6%A1%82%E6%9E%97%E5%B1%B1%E6%B0%B4/5583" target="_blank">桂林山水</a>
 
+                    <div class="cln_w">
+                        <p>热门酒店</p>
+                        <div class="cln_c clearfix">
+                            <a href="https://baike.baidu.com/item/%E9%94%A6%E6%B1%9F%E4%B9%8B%E6%98%9F%E9%85%92%E5%BA%97" target="_blank">锦江之星</a>
+                            <a href="https://baike.baidu.com/item/%E5%A6%82%E5%AE%B6%E9%85%92%E5%BA%97" target="_blank">如家酒店</a>
+                            <a href="https://baike.baidu.com/item/7%E5%A4%A9%E8%BF%9E%E9%94%81%E9%85%92%E5%BA%97?fromtitle=%E4%B8%83%E5%A4%A9%E8%BF%9E%E9%94%81%E9%85%92%E5%BA%97&fromid=513859"
+                               target="_blank">七天连锁酒店</a>
+                            <a href="https://baike.baidu.com/item/%E5%96%9C%E8%BE%BE%E5%B1%8B%E5%9B%BD%E9%99%85%E9%85%92%E5%BA%97" target="_blank">喜达屋国际酒店</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
         <div class="clumn_r01">
             <div class="js_box">
                 <div class="js_tit clearfix">
                     <div class="xs_w">显示方式：<a class="tw_a" href="#">图文</a></div>
-                    <form id="pageForm" name="pageForm" action="/travelSpot" method="post">
+                    <form id="pageForm" name="pageForm" action="/hotelAccommodation" method="post">
                         <input type="hidden" id="count" name="count" th:value="${pageParam.count}"/>
                         <input type="hidden" id="pageNumber" name="pageNumber" th:value="${pageParam.pageNumber}"/>
                         <input type="hidden" id="size" name="size" th:value="${pageParam.size}"/>
@@ -137,20 +135,22 @@
                             <a class="previousPage">上一页</a>
                             <a class="toPageOne">首页</a>
                             <a class="nextPage">下一页</a>
-                            <a class="toPageLast">尾页</a></div>
+                            <a class="toPageLast">尾页</a>
+                        </div>
                     </form>
                 </div>
                 <div class="js_wrap claerdix">
                     <div class="js_con clearfix" th:each="var,iterStat: ${pageData}">
-                        <div class="js_l"><a th:href="@{/scenicSpotPortalView(id=${var.id})}"><img th:src="${var.imgUrl}" style="width:100px;    height: 75px;"/></a></div>
                         <div class="js_c">
-                            <p><b><a th:href="@{/scenicSpotPortalView(id=${var.id})}" th:text="${var.spotName}"></a></b></p>
-                            <p th:text="'景点地址：'+${var.spotAddress}"></p>
-                            <p th:text="'开放时间：'+${var.openTime}"></p>
-
+                            <p><b><a th:href="@{/userView(id=${var.id})}" th:text="${var.userName}"></a></b></p>
+                            <!-- <p><a class="js_pl" href="#"><span>0</span>条评论</a> <a class="js_gm" href="#"><span>102</span>人购买</a></p>-->
+                            <p th:if="${var.role=='ROLE_GUID'}">角色：导游</p>
+                            <p th:if="${var.role=='ROLE_DRIVER'}">角色：司机</p>
+                            <p>推荐指数：非常推荐</p>
+                            <p th:text="'联系方式：'+${var.linkTel}"></p>
                         </div>
                         <div class="js_r">
-                            <p><span class="fn_o">门票：￥</span><b th:text="${var.ticketsMessage}"></b>起</p>
+                            <p><span class="fn_o">￥</span><b th:text="200"></b>起</p>
                         </div>
                     </div>
                 </div>

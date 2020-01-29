@@ -21,6 +21,8 @@ public class UserSqlProvider {
         return "SELECT * FROM t_pz_user WHERE USER_NAME = #{userName} AND DELETE_STATUS=0";
     }
 
+    public String findByRoleName(){return "SELECT * FROM t_pz_user WHERE ROLE in (ROLE_GUID,ROLE_DRIVER) AND DELETE_STATUS=0";}
+
     public String findList() {
         return "SELECT * FROM t_pz_user WHERE DELETE_STATUS=0 ORDER BY ADD_TIME DESC";
     }

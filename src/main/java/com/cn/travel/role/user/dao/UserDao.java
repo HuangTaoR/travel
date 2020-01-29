@@ -1,14 +1,18 @@
 package com.cn.travel.role.user.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.UpdateProvider;
+import org.springframework.stereotype.Component;
+
 import com.cn.travel.base.dao.BaseDao;
 import com.cn.travel.role.user.entity.Porvice;
 import com.cn.travel.role.user.entity.User;
 import com.cn.travel.role.user.provider.UserSqlProvider;
-
-import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Mapper
 @Component
@@ -25,6 +29,9 @@ public interface UserDao extends BaseDao<User> {
 
     @SelectProvider(type = UserSqlProvider.class, method = "findByUserName")
     public User findByUserName(@Param("userName") String userName);
+
+    @SelectProvider(type = UserSqlProvider.class,method = "findByRoleName")
+    public List<User> findByRoleName();
 
     @SelectProvider(type = UserSqlProvider.class, method = "findList")
     public List<User> findList();

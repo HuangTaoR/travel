@@ -25,6 +25,8 @@ public class Order extends BaseDomain {
 
     private String setoffTime;
 
+    private String leaveTime;
+
     private String linkTel;
 
     private Integer peopleCount;
@@ -153,5 +155,13 @@ public class Order extends BaseDomain {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public String getLeaveTime() {
+        return leaveTime;
+    }
+
+    public void setLeaveTime(String leaveTime) {
+        this.leaveTime = leaveTime;
     }
 }

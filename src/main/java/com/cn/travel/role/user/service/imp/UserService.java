@@ -1,5 +1,11 @@
 package com.cn.travel.role.user.service.imp;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
 import com.cn.travel.role.user.dao.UserDao;
 import com.cn.travel.role.user.entity.Porvice;
 import com.cn.travel.role.user.entity.User;
@@ -7,12 +13,6 @@ import com.cn.travel.role.user.service.IUserService;
 import com.cn.travel.utils.Tools;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserService implements IUserService {
@@ -74,5 +74,14 @@ public class UserService implements IUserService {
 
     public long state2count() throws Exception {
         return userDao.state2count();
+    }
+
+    @Override
+    public List<User> findByPageInCondition(int currentPage, int pageSize) {
+        List<User> list = new ArrayList<User>();
+        PageHelper.startPage(currentPage, pageSize);
+        list = userDao.findByRoleName();
+        PageInfo<User> pageInfo = new PageInfo<User>(list);
+        return pageInfo.getList();
     }
 }

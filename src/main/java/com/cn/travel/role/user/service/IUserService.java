@@ -1,9 +1,9 @@
 package com.cn.travel.role.user.service;
 
+import java.util.List;
+
 import com.cn.travel.role.user.entity.Porvice;
 import com.cn.travel.role.user.entity.User;
-
-import java.util.List;
 
 public interface IUserService {
 
@@ -26,5 +26,7 @@ public interface IUserService {
     public List<Porvice> countPorvice() throws Exception;
 
     public User login(String userName, String password) throws Exception;
+
+    public List<User> findByPageInCondition(int currentPage,int pageSize);
 
 }

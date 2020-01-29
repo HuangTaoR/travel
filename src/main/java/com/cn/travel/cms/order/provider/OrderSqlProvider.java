@@ -32,14 +32,14 @@ public class OrderSqlProvider {
     public String update() {
         return "UPDATE t_yw_order SET MODIFY_USER_ID=#{modifyUserId},MODIFY_TIME=NOW(),USER_ID=#{userId},USER_NAME=#{userName}," +
                 " PRODUCT_ID=#{productId},PRODUCT_NAME=#{productName},FEE=#{fee},PRODUCT_TYPE=#{productType},STATE=#{state}," +
-                "ORDER_CODE=#{orderCode},ORDER_TIME=#{orderTime},SETOFF_TIME=#{setoffTime},LINK_TEL=#{linkTel},PEOPLE_COUNT=#{peopleCount}" +
+                "ORDER_CODE=#{orderCode},ORDER_TIME=#{orderTime},SETOFF_TIME=#{setoffTime},LEAVE_TIME=#{leaveTime},LINK_TEL=#{linkTel},PEOPLE_COUNT=#{peopleCount}" +
                 ",REQUIREMENT=#{requirement},IC_CODE=#{icCode},IMG_URL=#{imgUrl} WHERE id=#{id}";
     }
 
     public String save() {
         return "INSERT INTO t_yw_order(ID,ADD_USER_ID,ADD_TIME,USER_ID,USER_NAME,PRODUCT_ID,PRODUCT_NAME,FEE,PRODUCT_TYPE,STATE,ORDER_CODE,ORDER_TIME," +
-                "SETOFF_TIME,LINK_TEL,PEOPLE_COUNT,REQUIREMENT,IC_CODE,IMG_URL) VALUES(#{id},#{addUserId},NOW(),#{userId},#{userName},#{productId},#{productName}," +
-                "#{fee},#{productType},#{state},#{orderCode},#{orderTime},#{setoffTime},#{linkTel},#{peopleCount},#{requirement},#{icCode},#{imgUrl})";
+                "SETOFF_TIME,LINK_TEL,PEOPLE_COUNT,REQUIREMENT,IC_CODE,IMG_URL,LEAVE_TIME) VALUES(#{id},#{addUserId},NOW(),#{userId},#{userName},#{productId},#{productName}," +
+                "#{fee},#{productType},#{state},#{orderCode},#{orderTime},#{setoffTime},#{linkTel},#{peopleCount},#{requirement},#{icCode},#{imgUrl},#{leaveTime})";
     }
 
     public String deleteByid() {
