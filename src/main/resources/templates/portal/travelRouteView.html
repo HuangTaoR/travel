@@ -149,7 +149,10 @@
         }).then((flag) => {
             if(flag) {
                 swal("恭喜，预定成功");
-                window.location.href="/travelRouteCreatOrder?id="+userId;
+                setTimeout(function () {
+//这里面是你要休眠后所执行的js代码
+                    window.location.href="/travelRouteCreatOrder?id="+userId;
+                }, 2000);
             }else{
                 swal("已取消预定");}});
     }

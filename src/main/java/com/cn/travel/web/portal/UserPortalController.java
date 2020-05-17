@@ -1,8 +1,12 @@
 package com.cn.travel.web.portal;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.cn.travel.cms.order.entity.Order;
+import com.cn.travel.cms.order.service.imp.OrderService;
+import com.cn.travel.role.user.entity.User;
+import com.cn.travel.role.user.service.imp.UserService;
+import com.cn.travel.utils.Tools;
+import com.cn.travel.web.base.BaseController;
+import com.cn.travel.web.base.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,17 +14,18 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.cn.travel.role.user.entity.User;
-import com.cn.travel.role.user.service.imp.UserService;
-import com.cn.travel.utils.Tools;
-import com.cn.travel.web.base.BaseController;
-import com.cn.travel.web.base.PageParam;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Controller
 public class UserPortalController extends BaseController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    OrderService orderService;
 
     @RequestMapping("/userLoging")
     public ModelAndView userLoging(String userName, String password, RedirectAttributes redirectAttributes, HttpSession httpSession) {
@@ -146,7 +151,7 @@ public class UserPortalController extends BaseController {
     }
 
     @RequestMapping("/user")
-    public ModelAndView travelRoute(PageParam pageParam) {
+    public ModelAndView guidDriver(PageParam pageParam) {
         ModelAndView mv = this.getModeAndView();
         if (pageParam.getPageNumber() < 1) {
             pageParam = new PageParam();
@@ -169,5 +174,59 @@ public class UserPortalController extends BaseController {
         mv.addObject("pageParam", pageParam);
         mv.setViewName("portal/user");
         return mv;
+    }
+
+    @RequestMapping("/userPortalView")
+    public ModelAndView userPortalView(String id) {
+        ModelAndView mv = this.getModeAndView();
+        try {
+            mv.addObject("entity", userService.findById(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mv.setViewName("portal/userView");
+        return mv;
+    }
+
+    @RequestMapping("/guidCreatOrder")
+    public ModelAndView travelRouteCreatOrder(String id, HttpSession httpSession) {
+        ModelAndView mv = this.getModeAndView();
+        try {
+            User carGuidUser = userService.findById(id);
+            User user = userService.findByUserName(httpSession.getAttribute("userName").toString());
+            Order order = new Order();
+            order.setId(Tools.getUUID());
+            order.setUserId(user.getId());
+            order.setUserName(user.getUserName());
+            order.setProductId(carGuidUser.getId());
+            order.setProductName(getRoleNameCN(carGuidUser.getRole()));
+            order.setImgUrl("/insurance/保险.jpg");
+            order.setFee(200);
+            order.setProductType(3);
+            order.setLinkTel(user.getLinkTel());
+            order.setIcCode(user.getIcCode());
+            order.setRequirement("无");
+            order.setState(0);
+            order.setOrderCode("O" + Tools.getUUID().substring(0, 6).toUpperCase());
+            order.setOrderTime(Tools.date2Str(new Date(), "yyyy-MM-dd"));
+            order.setSetoffTime(Tools.date2Str(new Date(), "yyyy-MM-dd"));
+            orderService.save(order);
+            mv.addObject("entity", carGuidUser);
+            mv.addObject("CreatSuccess", true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mv.setViewName("portal/userView");
+        return mv;
+    }
+
+    private String getRoleNameCN(String roleEN){
+        if (roleEN.equalsIgnoreCase("ROLE_GUID")){
+            return "导游";
+        }
+        if (roleEN.equalsIgnoreCase("ROLE_DRIVER")){
+            return "司机";
+        }
+        return "普通用户";
     }
 }
