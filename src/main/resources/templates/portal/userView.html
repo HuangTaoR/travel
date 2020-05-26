@@ -89,7 +89,8 @@
                         <p th:text="'员工号：'+${entity.icCode}"></p>
                         <p th:if="${entity.role=='ROLE_DRIVER'}">职业：司机</p>
                         <p th:if="${entity.role=='ROLE_GUID'}">职业：导游</p>
-                        <p th:text="'价格：￥200'"></p>
+                        <p th:text="'价格：￥'"></p>
+                        <p id="price" th:text="200"></p>
                     </div>
                     <!--<div class="share">
                         <div class="bshare-custom"><strong>分享到&nbsp;&nbsp;</strong><a title="分享到QQ空间" class="bshare-qzone"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到人人网" class="bshare-renren"></a><a title="分享到腾讯微博" class="bshare-qqmb"></a><a title="分享到网易微博" class="bshare-neteasemb"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span></div>
@@ -145,7 +146,11 @@
         }).then((flag) => {
             if(flag) {
                 swal("恭喜，预定成功");
-                window.location.href="/guidCreatOrder?id="+userId;
+                setTimeout(function () {
+                    var money=$("#price").text();
+                    window.location.href="/guidCreatOrder?id="+userId+"&money="+money;
+                }, 2000);
+
             }else{
                 swal("已取消预定");}});
     }

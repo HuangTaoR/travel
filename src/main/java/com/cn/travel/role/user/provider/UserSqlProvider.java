@@ -33,12 +33,12 @@ public class UserSqlProvider {
 
     public String update() {
         return "UPDATE t_pz_user SET MODIFY_USER_ID=#{modifyUserId},MODIFY_TIME=NOW(),USER_NAME=#{userName}, " +
-                "PASSWORD=#{password},LINK_TEL=#{linkTel},NAME=#{name},IC_CODE=#{icCode},STATE=#{state},ROLE=#{role},PROVINCE=#{province} WHERE id=#{id}";
+                "PASSWORD=#{password},LINK_TEL=#{linkTel},NAME=#{name},IC_CODE=#{icCode},STATE=#{state},ROLE=#{role},PROVINCE=#{province},MONEY=#{money} WHERE id=#{id}";
     }
 
     public String save() {
-        return "INSERT INTO t_pz_user(ID,ADD_USER_ID,ADD_TIME,USER_NAME,PASSWORD,LINK_TEL,NAME,IC_CODE,STATE,PROVINCE,ROLE) VALUES" +
-                "(#{id},#{addUserId},NOW(),#{userName},#{password},#{linkTel},#{name},#{icCode},#{state},#{province},#{role})";
+        return "INSERT INTO t_pz_user(ID,ADD_USER_ID,ADD_TIME,USER_NAME,PASSWORD,LINK_TEL,NAME,IC_CODE,STATE,PROVINCE,ROLE,MONEY) VALUES" +
+                "(#{id},#{addUserId},NOW(),#{userName},#{password},#{linkTel},#{name},#{icCode},#{state},#{province},#{role},#{money})";
     }
 
     public String deleteByid() {

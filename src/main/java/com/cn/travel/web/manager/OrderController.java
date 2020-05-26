@@ -2,6 +2,8 @@ package com.cn.travel.web.manager;
 
 import com.cn.travel.cms.order.entity.Order;
 import com.cn.travel.cms.order.service.imp.OrderService;
+import com.cn.travel.role.user.entity.User;
+import com.cn.travel.role.user.service.imp.UserService;
 import com.cn.travel.utils.Tools;
 import com.cn.travel.web.base.BaseController;
 import com.cn.travel.web.base.PageParam;
@@ -21,6 +23,9 @@ public class OrderController extends BaseController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping("/orderList")
     public ModelAndView orderList(PageParam pageParam, @RequestParam(value = "query", required = false) String query) {
@@ -91,7 +96,7 @@ public class OrderController extends BaseController {
     }
 
     @RequestMapping("/orderSave")
-    public String orderSave(HttpServletRequest request, String id) {
+    public String orderSave(HttpServletRequest request, String id,String money) {
         Order entity = null;
         try {
             if (Tools.notEmpty(id)) {
@@ -101,6 +106,7 @@ public class OrderController extends BaseController {
             }
             this.bindValidateRequestEntity(request, entity);
             if (Tools.isEmpty(entity.getId())) {
+                User user=userService.findByUserName(id);
                 entity.setId(Tools.getUUID());
                 orderService.save(entity);
             } else {

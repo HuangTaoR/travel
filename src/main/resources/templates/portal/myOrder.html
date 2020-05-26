@@ -34,8 +34,9 @@
         <li><a th:href="@{/car}">旅游车票</a><img src="images/nav_line.jpg"/></li>
         <li><a th:href="@{/insurance}">旅游保险</a><img src="images/nav_line.jpg"/></li>
         <li><a th:href="@{/strategy}">旅游攻略</a><img src="images/nav_line.jpg"/></li>
+        <li><a th:href="@{/user}">导游司机</a><img src="images/nav_line.jpg"/></li>
         <li><a th:href="@{/attention}">注意事项</a><img src="images/nav_line.jpg"/></li>
-        <li><a th:href="@{/useCenter}">会员中心</a><img src="images/nav_line.jpg"/></li>
+        <li th:if="${session.userName!=null}" class="cur"><a th:href="@{/userCenter}">会员中心</a><img src="images/nav_line.jpg"/></li>
     </ul>
 </div>
 <div class="b_wrap">
@@ -192,7 +193,10 @@
         }).then((flag) => {
             if(flag) {
                 swal("恭喜，支付成功");
-                window.location.href="/payOrder?id="+userId;
+                setTimeout(function () {
+                    window.location.href="/payOrder?id="+userId;
+                }, 2000);
+
             }else{
                 swal("已取消支付");}});
     }
@@ -206,7 +210,10 @@
         }).then((flag) => {
             if(flag) {
                 swal("恭喜，撤销成功");
-                window.location.href="/deleteOrder?id="+userId;
+                setTimeout(function () {
+                    window.location.href="/deleteOrder?id="+userId;
+                }, 2000);
+
             }else{
                 swal("已取消撤销");}});
     }

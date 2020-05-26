@@ -1,19 +1,19 @@
 package com.cn.travel.web.portal;
 
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.cn.travel.cms.order.entity.Order;
 import com.cn.travel.cms.order.service.imp.OrderService;
 import com.cn.travel.role.user.entity.User;
 import com.cn.travel.role.user.service.imp.UserService;
 import com.cn.travel.web.base.BaseController;
 import com.cn.travel.web.base.PageParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class OrderPortalController extends BaseController {
@@ -23,6 +23,7 @@ public class OrderPortalController extends BaseController {
 
     @Autowired
     OrderService orderService;
+
 
     @RequestMapping("/myOrder")
     public ModelAndView myOrder(HttpSession httpSession,
@@ -39,18 +40,28 @@ public class OrderPortalController extends BaseController {
     }
 
     @RequestMapping("/payOrder")
+    @Transactional
     public String payOrder(String id) throws Exception {
         Order order = orderService.findById(id);
-        order.setState(1);
+        User user=userService.findById(id);
+        if (user.getMoney()<order.getFee()){
+            return REDIRECT + "/myOrder";
+        }
+        user.setMoney(user.getMoney()-(int)order.getFee());
+        userService.update(user);
         orderService.update(order);
         return REDIRECT + "/myOrder";
     }
 
     @RequestMapping("/deleteOrder")
+    @Transactional
     public String deleteOrder(String id) throws Exception {
         Order order = orderService.findById(id);
         order.setState(2);
         orderService.update(order);
+        User user=userService.findById(id);
+        user.setMoney(user.getMoney()+(int)order.getFee());
+        userService.update(user);
         return REDIRECT + "/myOrder";
     }
 }

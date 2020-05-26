@@ -140,7 +140,9 @@
         }).then((flag) => {
             if(flag) {
                 swal("恭喜，预定成功");
-                window.location.href="/travelSpotCreatOrder?id="+userId;
+                setTimeout(function () {
+                    window.location.href="/travelSpotCreatOrder?id="+userId;
+                }, 2000);
             }else{
                 swal("已取消预定");}});
     }

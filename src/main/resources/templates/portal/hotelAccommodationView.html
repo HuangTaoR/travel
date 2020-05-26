@@ -119,7 +119,10 @@
             dangerMode: true,
         }).then((flag) => {
             if(flag) {
-                window.location.href="/goReserve?id="+userId;
+                setTimeout(function () {
+                    window.location.href="/goReserve?id="+userId;
+                }, 2000);
+
             }else{
                 swal("已取消预定");}});
     }

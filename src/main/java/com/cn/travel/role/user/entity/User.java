@@ -21,6 +21,8 @@ public class User extends BaseDomain {
 
     private String role;
 
+    private Integer money;
+
     public String getUserName() {
         return userName;
     }
@@ -83,5 +85,13 @@ public class User extends BaseDomain {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Integer getMoney() {
+        return money;
+    }
+
+    public void setMoney(Integer money) {
+        this.money = money;
     }
 }

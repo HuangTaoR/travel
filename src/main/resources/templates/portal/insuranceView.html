@@ -187,7 +187,10 @@
         }).then((flag) => {
             if(flag) {
                 swal("恭喜，预定成功");
-                window.location.href="/insuranceCreatOrder?id="+userId;
+                setTimeout(function () {
+                    window.location.href="/insuranceCreatOrder?id="+userId;
+                }, 2000);
+
             }else{
                 swal("已取消预定");}});
     }

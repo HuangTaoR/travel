@@ -5,7 +5,6 @@ import com.cn.travel.role.user.service.imp.UserService;
 import com.cn.travel.utils.Tools;
 import com.cn.travel.web.base.BaseController;
 import com.cn.travel.web.base.PageParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/manager")
@@ -111,9 +111,56 @@ public class UserController extends BaseController {
                     return mv;
                 }
                 entity.setId(Tools.getUUID());
+                if(entity.getRole().equals("ROLE_COMMON")){
+                    entity.setMoney(200);
+                }
                 userService.save(entity);
             } else {
                 userService.update(entity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mv.addObject("pageData", userService.findByPage(1, 10, null));
+        PageParam pageParam = new PageParam();
+        long count = 0;
+        try {
+            count = userService.count();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        pageParam.setCount(count);
+        if (count <= 10) {
+            pageParam.setSize(1);
+        } else {
+            pageParam.setSize(count % 10 == 0 ? count / 10 : count / 10 + 1);
+        }
+        pageParam.setPageNumber(1);
+        pageParam.setPageSize(10);
+        mv.addObject("pageParam", pageParam);
+        mv.setViewName("user/allUsers");
+        return mv;
+    }
+
+    @RequestMapping("/userRecharge")
+    public ModelAndView userecharge() {
+        ModelAndView mv = this.getModeAndView();
+        mv.setViewName("user/userRecharge");
+        return mv;
+    }
+
+    @RequestMapping("/recharge")
+    public ModelAndView userRechargeSave(String userName,Integer money) {
+        ModelAndView mv = this.getModeAndView();
+        try {
+            User user=userService.findByUserName(userName);
+            if (Optional.ofNullable(user).isPresent() && user.getState().equals(1)){
+                user.setMoney(user.getMoney() + money);
+                userService.update(user);
+            }else {
+                mv.addObject("message", "账号不存在或者处于非法状态，无法充值！");
+                mv.setViewName("user/userRecharge");
+                return mv;
             }
         } catch (Exception e) {
             e.printStackTrace();
