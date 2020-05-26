@@ -85,14 +85,16 @@
 <body>
 <div class="top_hw clearfix">
     <div class="top_h clearfix">
-        <div class="top_hl"><span>欢迎来到中国梦想游，让你的梦想全程免费自由行！</span> 预定热线：<b>0571-63322269</b></div>
+        <div class="top_hl"><span>欢迎来到华亿旅游地接社，让你的梦想全程免费自由行！</span> 预定热线：<b>0571-63322269</b></div>
         <div class="top_hr"><a th:if="${session.userName==null}" th:href="@{/register}">会员注册</a> | <span th:if="${session.userName!=null}" th:text="'欢迎你，'+${session.userName}"></span><a
                 th:if="${session.userName==null}" th:href="@{/goLogin}">登录</a> | <a th:if="${session.userName!=null}" th:href="@{/goLogout}">退出</a></div>
     </div>
 </div>
 <div class="head_w">
-    <div class="head_t clearfix">
-        <div class="logo"><img src="images/logo.jpg"/></div>
+    <div class="head_t clearfix" style="
+    width: 1200px;
+">
+        <div class="logo" style="font-size:50px">华亿旅游地接社</div>
         <div class="rx_line"><img src="images/rx.jpg"/></div>
     </div>
 </div>
