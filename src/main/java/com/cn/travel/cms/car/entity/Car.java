@@ -35,6 +35,8 @@ public class Car extends BaseDomain {
 
     private String remark;
 
+    private Integer count;
+
     public String getTitle() {
         return title;
     }
@@ -113,5 +115,13 @@ public class Car extends BaseDomain {
 
     public String getRemark() {
         return remark;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

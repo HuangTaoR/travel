@@ -39,6 +39,12 @@
             <input th:value="${entity.price}" readonly="readonly" id="price" name="price" type="text" class="layui-input newsName" lay-verify="required" placeholder="请输入酒店价格"/>
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">房间数量</label>
+        <div class="layui-input-block">
+            <input th:value="${entity.count}" readonly="readonly" id="count" name="count" type="text" class="layui-input newsName" lay-verify="required" placeholder="请输入房间数量"/>
+        </div>
+    </div>
     <div class="layui-form-item" th:if="${entity.imgUrl != null}">
         <label class="layui-form-label">图片</label>
         <div class="layui-input-block">

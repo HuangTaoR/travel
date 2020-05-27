@@ -28,13 +28,13 @@ public class CarSqlProvider {
     public String update() {
         return "UPDATE t_cms_car SET MODIFY_USER_ID=#{modifyUserId},MODIFY_TIME=NOW(),TITLE=#{title}," +
                 "START_PLACE=#{startPlace},END_PLACE=#{endPlace},START_DATE_AND_TIME=#{startDateAndTime},NEED_TIME=#{needTime},GATHER_PLACE=#{gatherPlace}," +
-                "TYPE=#{type},PRICE=#{price},IMG_URL=#{imgUrl},STATE=#{state},REMARK=#{remark} WHERE id=#{id}";
+                "TYPE=#{type},PRICE=#{price},IMG_URL=#{imgUrl},STATE=#{state},REMARK=#{remark},COUNT=#{count} WHERE id=#{id}";
     }
 
     public String save() {
         return "INSERT INTO t_cms_car(ID,ADD_USER_ID,ADD_TIME,TITLE,START_PLACE,END_PLACE,START_DATE_AND_TIME," +
-                "NEED_TIME,GATHER_PLACE,TYPE,PRICE,IMG_URL,STATE,REMARK) VALUES(#{id},#{addUserId},NOW(),#{title},#{startPlace}," +
-                "#{endPlace},#{startDateAndTime},#{needTime},#{gatherPlace},#{type},#{price},#{imgUrl},#{state},#{remark})";
+                "NEED_TIME,GATHER_PLACE,TYPE,PRICE,IMG_URL,STATE,REMARK,COUNT) VALUES(#{id},#{addUserId},NOW(),#{title},#{startPlace}," +
+                "#{endPlace},#{startDateAndTime},#{needTime},#{gatherPlace},#{type},#{price},#{imgUrl},#{state},#{remark},#{count})";
     }
 
     public String deleteByid() {

@@ -32,12 +32,12 @@ public class HotelSqlProvider {
     public String update() {
         return "UPDATE t_cms_hotel SET MODIFY_USER_ID=#{modifyUserId},MODIFY_TIME=NOW(),HOTEL_NAME=#{hotelName}, " +
                 "HOTEL_INTRO=#{hotelIntro},HOTEL_STAR=#{hotelStar},LINK_PHONE=#{linkPhone},ADDRESS=#{address},STATE=#{state},IMG_URL=#{imgUrl}," +
-                "PRICE=#{price} WHERE id=#{id}";
+                "PRICE=#{price},COUNT=#{count} WHERE id=#{id}";
     }
 
     public String save() {
-        return "INSERT INTO t_cms_hotel(ID,ADD_USER_ID,ADD_TIME,HOTEL_NAME,HOTEL_INTRO,HOTEL_STAR,LINK_PHONE,ADDRESS,STATE, IMG_URL,PRICE) " +
-                "VALUES(#{id},#{addUserId},NOW(),#{hotelName},#{hotelIntro},#{hotelStar},#{linkPhone},#{address},#{state},#{imgUrl},#{price})";
+        return "INSERT INTO t_cms_hotel(ID,ADD_USER_ID,ADD_TIME,HOTEL_NAME,HOTEL_INTRO,HOTEL_STAR,LINK_PHONE,ADDRESS,STATE, IMG_URL,PRICE,COUNT) " +
+                "VALUES(#{id},#{addUserId},NOW(),#{hotelName},#{hotelIntro},#{hotelStar},#{linkPhone},#{address},#{state},#{imgUrl},#{price},#{count})";
     }
 
     public String deleteByid() {

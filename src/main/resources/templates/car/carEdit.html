@@ -59,6 +59,12 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">座位数量</label>
+        <div class="layui-input-block">
+            <input th:value="${entity.count}" id="count" name="count" type="text" class="layui-input newsName" lay-verify="required" placeholder="请输入数量"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">类型</label>
         <div class="layui-input-inline">
             <select id="type" name="type" class="newsLook" lay-filter="browseLook">

@@ -21,6 +21,8 @@ public class Hotel extends BaseDomain {
 
     private double price;
 
+    private Integer count;
+
     public String getHotelName() {
         return hotelName;
     }
@@ -84,5 +86,13 @@ public class Hotel extends BaseDomain {
     public double getPrice() {
 
         return price;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

@@ -1,13 +1,5 @@
 package com.cn.travel.web.portal;
 
-import java.util.Date;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.cn.travel.cms.car.entity.Car;
 import com.cn.travel.cms.car.service.imp.CarService;
 import com.cn.travel.cms.order.entity.Order;
@@ -17,6 +9,14 @@ import com.cn.travel.role.user.service.imp.UserService;
 import com.cn.travel.utils.Tools;
 import com.cn.travel.web.base.BaseController;
 import com.cn.travel.web.base.PageParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Controller
 public class CarPortalController extends BaseController {
@@ -71,7 +71,20 @@ public class CarPortalController extends BaseController {
     public ModelAndView travelRouteCreatOrder(String id, HttpSession httpSession) {
         ModelAndView mv = this.getModeAndView();
         try {
+            ReentrantLock reentrantLock=new ReentrantLock();
+            reentrantLock.lock();
             Car car = carService.findById(id);
+            try{
+                if (car.getCount()<=0){
+                    mv.addObject("entity", car);
+                    mv.addObject("CreatSuccess", false);
+                    return mv;
+                }
+                car.setCount(car.getCount()-1);
+            }finally {
+                reentrantLock.unlock();
+            }
+            carService.save(car);
             User user = userService.findByUserName(httpSession.getAttribute("userName").toString());
             Order order = new Order();
             order.setImgUrl(car.getImgUrl());

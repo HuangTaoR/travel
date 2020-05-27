@@ -9,7 +9,6 @@ import com.cn.travel.role.user.service.imp.UserService;
 import com.cn.travel.utils.Tools;
 import com.cn.travel.web.base.BaseController;
 import com.cn.travel.web.base.PageParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Controller
 public class HotelPortalController extends BaseController {
@@ -86,7 +86,21 @@ public class HotelPortalController extends BaseController {
     public ModelAndView hotelCreatOrder(String hotelId, HttpServletRequest request, HttpSession httpSession) {
         ModelAndView mv = this.getModeAndView();
         try {
+
+            ReentrantLock reentrantLock=new ReentrantLock();
+            reentrantLock.lock();
             Hotel hotel = hotelService.findById(hotelId);
+            try{
+                if (hotel.getCount()<=0){
+                    mv.addObject("entity", hotel);
+                    mv.addObject("CreatSuccess", false);
+                    return mv;
+                }
+                hotel.setCount(hotel.getCount()-1);
+            }finally {
+                reentrantLock.unlock();
+            }
+            hotelService.save(hotel);
             User user = userService.findByUserName(httpSession.getAttribute("userName").toString());
             Order order = new Order();
             this.bindValidateRequestEntity(request, order);
