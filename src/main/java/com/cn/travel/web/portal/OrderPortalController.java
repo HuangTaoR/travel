@@ -43,13 +43,14 @@ public class OrderPortalController extends BaseController {
     @Transactional
     public String payOrder(String id) throws Exception {
         Order order = orderService.findById(id);
-        User user=userService.findById(id);
+        order.setState(1);
+        orderService.update(order);
+        User user=userService.findById(order.getUserId());
         if (user.getMoney()<order.getFee()){
             return REDIRECT + "/myOrder";
         }
         user.setMoney(user.getMoney()-(int)order.getFee());
         userService.update(user);
-        orderService.update(order);
         return REDIRECT + "/myOrder";
     }
 
@@ -59,9 +60,9 @@ public class OrderPortalController extends BaseController {
         Order order = orderService.findById(id);
         order.setState(2);
         orderService.update(order);
-        User user=userService.findById(id);
-        user.setMoney(user.getMoney()+(int)order.getFee());
-        userService.update(user);
+//        User user=userService.findById(order.getUserId());
+//        user.setMoney(user.getMoney()+(int)order.getFee());
+//        userService.update(user);
         return REDIRECT + "/myOrder";
     }
 }

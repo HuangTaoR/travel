@@ -47,7 +47,7 @@
                 <th>目的地</th>
                 <th>价格</th>
                 <th>类型</th>
-
+                <th>座位数量</th>
                 <th>状态</th>
                 <th>操作</th>
             </tr>
@@ -63,7 +63,7 @@
                 <td th:if="${var.type==1}">火车票</td>
                 <td th:if="${var.type==2}">汽车票</td>
                 <td th:if="${var.type==''}"></td>
-
+                <td th:text="${var.count}"></td>
                 <td th:if="${var.state==0}">待发布</td>
                 <td th:if="${var.state==1}">已发布</td>
                 <td th:if="${var.state==2}">已撤销</td>

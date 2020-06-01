@@ -84,7 +84,7 @@ public class CarPortalController extends BaseController {
             }finally {
                 reentrantLock.unlock();
             }
-            carService.save(car);
+            carService.update(car);
             User user = userService.findByUserName(httpSession.getAttribute("userName").toString());
             Order order = new Order();
             order.setImgUrl(car.getImgUrl());

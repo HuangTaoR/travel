@@ -100,7 +100,7 @@ public class HotelPortalController extends BaseController {
             }finally {
                 reentrantLock.unlock();
             }
-            hotelService.save(hotel);
+            hotelService.update(hotel);
             User user = userService.findByUserName(httpSession.getAttribute("userName").toString());
             Order order = new Order();
             this.bindValidateRequestEntity(request, order);

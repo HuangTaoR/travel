@@ -51,10 +51,10 @@
                 <td th:text="${iterStat.count}"></td>
                 <td th:text="${var.userName}"></td>
                 <td th:text="${var.productName}"></td>
-                <td th:if="${var.productType==0}">旅游路线</td>
-                <td th:if="${var.productType==1}">旅游景点</td>
+                <td th:if="${var.productType==4}">旅游保险</td>
+                <td th:if="${var.productType==3}">旅游路线</td>
+                <td th:if="${var.productType==0}">旅游景点</td>
                 <td th:if="${var.productType==2}">酒店</td>
-                <td th:if="${var.state==''}"></td>
                 <td th:text="${var.fee}"></td>
                 <td th:if="${var.state==0}">待付款</td>
                 <td th:if="${var.state==1}">已付款</td>

@@ -45,6 +45,7 @@
                 <th>酒店地址</th>
                 <th>酒店星级</th>
                 <th>联系方式</th>
+                <th>房间数量</th>
                 <th>状态</th>
                 <th>操作</th>
             </tr>
@@ -56,6 +57,7 @@
                 <td th:text="${var.address}"></td>
                 <td th:text="${var.hotelStar}"></td>
                 <td th:text="${var.linkPhone}"></td>
+                <td th:text="${var.count}"></td>
                 <td th:if="${var.state==0}">待发布</td>
                 <td th:if="${var.state==1}">已发布</td>
                 <td th:if="${var.state==2}">已撤销</td>
