@@ -43,12 +43,12 @@ public class OrderPortalController extends BaseController {
     @Transactional
     public String payOrder(String id) throws Exception {
         Order order = orderService.findById(id);
-        order.setState(1);
-        orderService.update(order);
         User user=userService.findById(order.getUserId());
         if (user.getMoney()<order.getFee()){
             return REDIRECT + "/myOrder";
         }
+        order.setState(1);
+        orderService.update(order);
         user.setMoney(user.getMoney()-(int)order.getFee());
         userService.update(user);
         return REDIRECT + "/myOrder";

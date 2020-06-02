@@ -104,6 +104,7 @@
                         <img src="images/order_button.jpg"/></a>
                         <p th:if="${session.userName==null}"><font color="red"> 预定请先登陆</font></p>
                         <p th:if="${CreatSuccess==true}"><font color="red">预定成功，请前往会员中心-我的订单查看订单</font></p></div>
+                        <p th:if="${CreatSuccess==false}"><font color="red">减库存失败，库存不能<=0</font></p></div>
                 </div>
             </div>
             <div class="xq_wrap">

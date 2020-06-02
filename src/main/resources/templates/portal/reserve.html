@@ -104,6 +104,7 @@
                         <td class="td01">特殊要求：</td>
                         <td class="tarea"><textarea name="requirement" id="requirement" cols="45" rows="5"></textarea></td>
                     </tr>
+                    <p th:if="${CreatSuccess==false}"><font color="red">减库存失败，库存不能<=0</font></p></div>
                     <tr>
                         <td>&nbsp;</td>
                         <td>

@@ -115,6 +115,7 @@ public class HotelPortalController extends BaseController {
             if (Tools.isEmpty(order.getIcCode())) {
                 order.setIcCode(user.getIcCode());
             }
+            order.setFee(hotel.getPrice());
             order.setProductId(hotel.getId());
             order.setImgUrl(hotel.getImgUrl());
             order.setProductName(hotel.getHotelName());

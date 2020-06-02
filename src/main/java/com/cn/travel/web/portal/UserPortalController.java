@@ -202,7 +202,7 @@ public class UserPortalController extends BaseController {
             order.setProductName(getRoleNameCN(carGuidUser.getRole()));
             order.setImgUrl("/insurance/保险.jpg");
             order.setFee(200);
-            order.setProductType(3);
+            order.setProductType(5);
             order.setLinkTel(user.getLinkTel());
             order.setIcCode(user.getIcCode());
             order.setRequirement("无");
