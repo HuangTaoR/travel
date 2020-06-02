@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
     <link rel="stylesheet" href="/css/font_eolqem241z66flxr.css" media="all"/>
     <link rel="stylesheet" href="/css/news.css" media="all"/>
+    <link rel="stylesheet" href="/js/sweetalert/sweetalert.css">
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+    <script src="/js/sweetalert/sweetalert.min.js"></script>
 </head>
 <body class="childrenBody">
 <form class="layui-form" id="pageForm" name="pageForm" action="/manager/orderList" method="post">
@@ -68,7 +71,7 @@
                     <a class="layui-btn layui-btn-xs layui-btn-normal" th:href="@{/manager/orderEdit(id=${var.id})}">
                         <i class="layui-icon">&#xe642;</i>
                     </a>
-                    <a class="layui-btn layui-btn-xs layui-btn-danger" th:href="@{/manager/orderDelete(id=${var.id})}">
+                    <a class="layui-btn layui-btn-xs layui-btn-danger" th:onclick="'openSweetAlertWithConfirm(\'' + ${var.id} + '\')'">
                         <i class="layui-icon">&#xe640;</i>
                     </a>
                 </td>
@@ -112,5 +115,23 @@
 <script type="text/javascript" src="/layui/layui.js"></script>
 <script type="text/javascript" src="/js/order/orderList.js"></script>
 <script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+<script th:inline="javascript">
+    function openSweetAlertWithConfirm(Id) {
+        swal({
+            title: "确认弹框",
+            text: "确认要预定吗?",
+            icon: "warning",
+            buttons: true,
+            buttons: ["取消", "确认"],
+            dangerMode: true,
+        }).then((flag) => {
+            if(flag) {
+                setTimeout(function () {
+                    window.location.href="/manager/orderDelete?id="+Id;
+                }, 1000);
+            }else{
+                swal("已取消");}});
+    }
+</script>
 </body>
 </html>
