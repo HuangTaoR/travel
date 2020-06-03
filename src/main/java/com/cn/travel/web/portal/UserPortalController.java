@@ -83,6 +83,8 @@ public class UserPortalController extends BaseController {
         try {
             user.setId(Tools.getUUID());
             user.setState(1);
+            user.setRole("ROLE_COMMON");
+            user.setMoney(0);
             userService.save(user);
         } catch (Exception e) {
             e.printStackTrace();

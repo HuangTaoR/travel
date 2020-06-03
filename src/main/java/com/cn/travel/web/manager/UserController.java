@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -155,7 +156,11 @@ public class UserController extends BaseController {
         try {
             User user=userService.findByUserName(userName);
             if (Optional.ofNullable(user).isPresent() && user.getState().equals(1)){
-                user.setMoney(user.getMoney() + money);
+                if (Objects.nonNull(user.getMoney())){
+                    user.setMoney(user.getMoney() + money);
+                }else {
+                    user.setMoney(money);
+                }
                 userService.update(user);
             }else {
                 mv.addObject("message", "账号不存在或者处于非法状态，无法充值！");
